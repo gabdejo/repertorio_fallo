@@ -1,6 +1,6 @@
 # Plan: Band Repertory → Music Database → Spotify Playlist Pipeline
 
-> **Implementation status (Stages 1–2 done).** Two approach details changed during
+> **Implementation status (Stages 1–3 done).** Approach details that changed during
 > the build vs. the original plan below:
 > - **Extraction** uses PyMuPDF **word coordinates** (split at the column boundary
 >   ~x=322), not a `2+ whitespace` split — the plain-text mode interleaved the two
@@ -8,6 +8,12 @@
 > - **`needs_review`** flags only no-artist / possible-duplicate rows (169/1164), and
 >   a `fuzzy_suggestion` column was added. The "low fuzzy confidence" rule was dropped
 >   because it flagged every unique artist.
+> - **Spotify genres and popularity are unavailable**: apps without Extended Quota
+>   Mode get no `genres`/`popularity`/`followers` on Artist/Track objects (in addition
+>   to the already-expected audio-features 403). Stage 3 degrades gracefully; Stage 4
+>   must rely on `genre_hint` + `genre_overrides.json`, not Spotify genres.
+> - Stage 3 adds a `low_confidence_match` column (match_score < 70) and caches
+>   lookups under `data/cache/` (gitignored), keyed by song+artist and by artist id.
 > See [README.md](README.md) for the as-built behavior.
 
 ## Context
@@ -68,6 +74,9 @@ repertorio_fallo/
     dictionaries/
       artist_aliases.json      # editable alias/correction map
       genre_overrides.json     # editable artist→genre overrides
+    cache/                     # gitignored; Spotify lookup caches (stage 3)
+      spotify_track_cache.json
+      spotify_artist_genre_cache.json
 
   src/
     __init__.py
@@ -123,16 +132,21 @@ Steps:
 `artist_aliases.json` and `genre_overrides.json` start small and are meant to be hand-edited, then
 re-running stage 2 re-applies them (idempotent — verified).
 
-## Stage 3 — Spotify matching (`src/spotify_api.py`) — SCAFFOLD NOW, IMPLEMENT NEXT
+## Stage 3 — Spotify matching (`src/spotify_api.py`) — DONE
 
 - Auth via **spotipy** `SpotifyOAuth` (playlist scopes) reading creds from `.env`.
-- For each row: query `q=track:<song> artist:<artist>`, take best candidate (rank by rapidfuzz on
-  title+artist and Spotify popularity). Store `track_id, official_artist, album, year, duration_ms,
-  popularity, match_score`. Flag low-confidence matches for manual review.
-- Fetch **artist genres** via the artist endpoint (still available) → feeds Stage 4.
-- **Audio features**: attempt `sp.audio_features(track_ids)`; wrap in try/except — on 403/None,
-  log once and leave BPM/energy/etc. columns null (per user decision).
-- Cache responses to avoid re-querying; respect rate limits.
+- For each row: query `q=track:<song> artist:<artist>` (falls back to a plain query), take the
+  best candidate by rapidfuzz `token_sort_ratio` on title (60%) + artist (40%). Store
+  `track_id, official_artist, album, year, duration_ms, popularity, match_score,
+  low_confidence_match` (flag when unmatched or `match_score < 70`).
+- Fetch **artist genres** via `sp.artist()`, cached per artist id — **in practice this app tier
+  returns no `genres`/`popularity` at all** (Spotify restricts these to apps with Extended Quota
+  Mode), so `artist_genres`/`popularity` are null for every row. Stage 4 must source genre from
+  `genre_hint` + `genre_overrides.json` instead.
+- **Audio features**: attempts `sp.audio_features(track_ids)` in batches of 100; wraps in
+  try/except — confirmed 403 in testing, degrades to null BPM/energy/etc. (per user decision).
+- Caches track and artist-genre lookups under `data/cache/*.json` (gitignored), saved every 25
+  rows so an interrupted run doesn't lose progress; re-running is fast and idempotent.
 - Output `songs_metadata.csv`.
 
 ## Stage 4 — Genre analysis (`src/genre_analysis.py`) — SCAFFOLD
@@ -175,5 +189,14 @@ coordinate-based extraction was correct).
 suggestions surfaced (21, e.g. `Madona`→`Madonna`); `needs_review` = 169; idempotent (identical
 output hash on re-run).
 
-**Later stages:** after creds are set, run a small N-song slice through `spotify_api.py`, confirm
-matches and that audio-features either populate or degrade gracefully to null on 403.
+**Stage 3 (Spotify matching):** ran a 20-song slice (`spotify_api.run(limit=20)`) after Spotify
+app creation + `.env` setup: 20/20 matched, correct track/artist/album/year (e.g. `24 K Magic` →
+Bruno Mars, score 96.8); 3/20 flagged `low_confidence_match` (e.g. `Agachadita Mix`, no listed
+artist, score 50); audio-features confirmed 403 and degraded to null as expected; `artist_genres`
+and `popularity` came back empty for every row, including major artists — confirmed via a direct
+`sp.artist()`/`sp.track()` call that the API returns no `genres`/`popularity` keys at all for this
+app (Extended Quota Mode restriction, not a bug). Re-running the same slice hit the cache
+(20/20 cache hits, <1s) and reproduced an identical CSV — idempotent, like Stages 1–2.
+
+**Later stages:** run the full 1164-row pipeline through `spotify_api.py` when ready; Stage 4
+should plan around Spotify genres being unavailable (see note above).

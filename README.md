@@ -10,7 +10,7 @@ taste. See [context.md](context.md) for the full vision.
 |------|--------|-------|
 | 1. PDF extraction | `src/pdf_extraction.py` | ✅ done |
 | 2. Cleaning / normalization | `src/cleaning.py` | ✅ done |
-| 3. Spotify matching | `src/spotify_api.py` | 🟡 scaffold |
+| 3. Spotify matching | `src/spotify_api.py` | ✅ done |
 | 4. Genre analysis | `src/genre_analysis.py` | 🟡 scaffold |
 | 5. Playlist creation | `src/playlist_creation.py` | 🟡 scaffold |
 | 6. Preference learning | `src/preferences.py` | 🟡 scaffold |
@@ -32,6 +32,10 @@ The repertory PDF lives in `data/raw/lista_canciones.pdf`.
 
 # Stage 2 — clean -> data/processed/songs_clean.csv
 .venv/Scripts/python.exe -m src.cleaning
+
+# Stage 3 — match to Spotify -> data/processed/songs_metadata.csv
+# (requires .env credentials, see "Spotify credentials" below)
+.venv/Scripts/python.exe -m src.spotify_api
 ```
 
 ### `songs_clean.csv` columns
@@ -41,6 +45,21 @@ The repertory PDF lives in `data/raw/lista_canciones.pdf`.
 - `genre_hint` — genre pulled out of the artist field (e.g. `(LATIN POP)`, `CUMBIA …`)
 - `fuzzy_suggestion` — a possible canonical spelling when a near-duplicate was found
 - `needs_review` — `True` for rows with no artist or a possible duplicate spelling
+
+### `songs_metadata.csv` columns
+`line_no, song_clean, artist_corrected` (join keys back to `songs_clean.csv`) plus:
+- `track_id`, `official_artist`, `album`, `year`, `duration_ms`, `popularity` — from the
+  best-matching Spotify track (null if no match found)
+- `artist_genres` — comma-separated genres from Spotify's artist endpoint (see note below —
+  usually empty for apps without Extended Quota Mode)
+- `match_score` — 0-100 fuzzy match confidence (song 60% + artist 40% weight)
+- `low_confidence_match` — `True` when unmatched or `match_score` is below 70; triage these
+  manually the same way as `needs_review` rows from Stage 2
+- `bpm, energy, danceability, acousticness, valence, loudness` — audio features, null if the
+  endpoint is unavailable (see note below)
+
+Stage 3 caches Spotify lookups in `data/cache/` (`spotify_track_cache.json`,
+`spotify_artist_genre_cache.json`), so re-running only queries new/changed rows.
 
 ## How the messy data is handled
 
@@ -70,5 +89,10 @@ fixes to `artist_aliases.json`, and re-run. Cleaning is idempotent.
 3. Copy `.env.example` → `.env` and fill in `SPOTIPY_CLIENT_ID` / `SPOTIPY_CLIENT_SECRET`.
 
 > Note: Spotify deprecated the audio-features endpoints (BPM, energy, …) for new
-> apps in Nov 2024. Stage 3 attempts them and falls back to null if unavailable;
-> basic metadata and artist genres still work.
+> apps in Nov 2024, and — as observed running Stage 3 — new apps without
+> **Extended Quota Mode** also get no `genres`/`popularity`/`followers` on Artist
+> and Track objects. Stage 3 attempts both and degrades to null gracefully;
+> basic metadata (track, album, year, duration) still works reliably. Because
+> Spotify genres are effectively unavailable, Stage 4 relies on `genre_hint`
+> (from the PDF) and `genre_overrides.json` as the primary genre sources, not
+> Spotify's artist genres.

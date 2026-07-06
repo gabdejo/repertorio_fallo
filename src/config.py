@@ -10,6 +10,7 @@ DATA = ROOT / "data"
 RAW = DATA / "raw"
 PROCESSED = DATA / "processed"
 DICTIONARIES = DATA / "dictionaries"
+CACHE = DATA / "cache"
 
 # --- Files -----------------------------------------------------------------
 PDF_PATH = RAW / "lista_canciones.pdf"
@@ -20,6 +21,9 @@ SONGS_METADATA_CSV = PROCESSED / "songs_metadata.csv"
 
 ARTIST_ALIASES_JSON = DICTIONARIES / "artist_aliases.json"
 GENRE_OVERRIDES_JSON = DICTIONARIES / "genre_overrides.json"
+
+SPOTIFY_TRACK_CACHE_JSON = CACHE / "spotify_track_cache.json"
+SPOTIFY_ARTIST_GENRE_CACHE_JSON = CACHE / "spotify_artist_genre_cache.json"
 
 # --- Parsing constants -----------------------------------------------------
 # Each repertory line looks like:  "123. SONG NAME        ARTIST"
@@ -78,8 +82,12 @@ ARTIST_STRIP_CHARS = " -/&–—,"
 FUZZY_SNAP_THRESHOLD = 95
 FUZZY_REVIEW_LOW = 86
 
+# Spotify match score (same 0-100 scale as spotify_api._score) below which a
+# match is flagged low_confidence_match for manual review.
+MATCH_LOW_CONFIDENCE_THRESHOLD = 70
+
 
 def ensure_dirs() -> None:
     """Create the data directories if they do not exist."""
-    for d in (RAW, PROCESSED, DICTIONARIES):
+    for d in (RAW, PROCESSED, DICTIONARIES, CACHE):
         d.mkdir(parents=True, exist_ok=True)

@@ -17,3 +17,6 @@ __pycache__/
 
 # Processed data (regenerable). Comment out to version the CSVs.
 data/processed/*.csv
+
+# Spotify API caches (regenerable)
+data/cache/
