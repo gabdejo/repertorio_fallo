@@ -1,0 +1,19 @@
+# Virtual environment
+.venv/
+venv/
+
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# Spotify token cache (created by spotipy)
+.cache
+.cache-*
+
+# Processed data (regenerable). Comment out to version the CSVs.
+data/processed/*.csv

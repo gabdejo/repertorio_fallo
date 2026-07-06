@@ -1,0 +1,9 @@
+pymupdf
+pandas
+rapidfuzz
+spotipy
+python-dotenv
+matplotlib
+seaborn
+plotly
+jupyter

@@ -1,0 +1,13 @@
+{
+  "_comment": "Maps a cleaned artist name (Title Case) to its canonical/official name. Hand-edit and re-run src.cleaning to re-apply. Keys are matched after basic normalization.",
+  "Beatles": "The Beatles",
+  "Freddie Mercury": "Queen",
+  "Selana": "Selena",
+  "Wsisin Y Yandel": "Wisin & Yandel",
+  "Wisin Y Yandel": "Wisin & Yandel",
+  "Michel Tello": "Michel Teló",
+  "N Klabe": "N'Klabe",
+  "N'Klave": "N'Klabe",
+  "Gran Combo": "El Gran Combo de Puerto Rico",
+  "De La Guetto": "De La Ghetto"
+}

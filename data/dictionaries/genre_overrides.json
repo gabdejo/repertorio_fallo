@@ -1,0 +1,4 @@
+{
+  "_comment": "Optional artist -> {genre, subgenre} overrides applied in Stage 4 (genre_analysis). Use to fix cases where Spotify genres are missing or wrong. Example below.",
+  "Grupo 5": {"genre": "Cumbia", "subgenre": "Cumbia Peruana"}
+}
