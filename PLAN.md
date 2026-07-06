@@ -14,6 +14,11 @@
 >   must rely on `genre_hint` + `genre_overrides.json`, not Spotify genres.
 > - Stage 3 adds a `low_confidence_match` column (match_score < 70) and caches
 >   lookups under `data/cache/` (gitignored), keyed by song+artist and by artist id.
+> - **BPM/audio-features are out of scope for automation**: no free API has verified
+>   coverage of this catalog, and Spotify no longer exposes `preview_url` either (so
+>   local audio analysis isn't an option). A **Last.fm genre source (Stage 3.5) is
+>   planned** to mitigate the missing Spotify genres — see that section below.
+>   Design is settled; implementation is deferred to a future session.
 > See [README.md](README.md) for the as-built behavior.
 
 ## Context
@@ -74,9 +79,10 @@ repertorio_fallo/
     dictionaries/
       artist_aliases.json      # editable alias/correction map
       genre_overrides.json     # editable artist→genre overrides
-    cache/                     # gitignored; Spotify lookup caches (stage 3)
-      spotify_track_cache.json
-      spotify_artist_genre_cache.json
+    cache/                     # gitignored; external API lookup caches
+      spotify_track_cache.json        # stage 3
+      spotify_artist_genre_cache.json # stage 3
+      lastfm_tag_cache.json           # stage 3.5 (planned)
 
   src/
     __init__.py
@@ -84,6 +90,7 @@ repertorio_fallo/
     pdf_extraction.py          # STAGE 1  (build now)
     cleaning.py                # STAGE 2  (build now)
     spotify_api.py             # STAGE 3  (scaffold now, implement next)
+    lastfm_api.py              # STAGE 3.5 (planned; design settled, not yet built)
     genre_analysis.py          # STAGE 4  (scaffold)
     playlist_creation.py       # STAGE 5  (scaffold)
     preferences.py             # STAGE 6  (scaffold)
@@ -149,9 +156,35 @@ re-running stage 2 re-applies them (idempotent — verified).
   rows so an interrupted run doesn't lose progress; re-running is fast and idempotent.
 - Output `songs_metadata.csv`.
 
+## Stage 3.5 — Last.fm genre tags (`src/lastfm_api.py`) — PLANNED (design settled, not built)
+
+**Why:** Spotify apps without Extended Quota Mode return no `genres`/`popularity` at all (see
+Stage 3 verification below), leaving Stage 4 with only `genre_hint` (153/1164 PDF-annotated rows)
+and hand-maintained `genre_overrides.json`. Last.fm's free, crowd-sourced tag API fills that gap
+— its userbase gives it decent coverage of Latin genres (cumbia, salsa, merengue, reggaetón).
+
+**Design:**
+- Plain `requests` calls (no SDK — Last.fm's API is simple REST + API key), reading
+  `LASTFM_API_KEY` from `.env`.
+- `fetch_artist_tags(artists: list[str]) -> dict[str, list[str]]`: calls `artist.getTopTags`
+  once per **unique** `artist_corrected` (not per song), returns top tags ordered by weight.
+- Cache in `data/cache/lastfm_tag_cache.json` (same load/save-JSON pattern as
+  `spotify_track_cache.json`), so re-runs are fast and idempotent.
+- No new CSV output — a supplemental cache feeding Stage 4, like Stage 3's own caches.
+- Rate limiting: Last.fm's soft cap (~5 req/sec) is a non-issue since calls are per unique
+  artist, not per song — no special handling needed beyond a small delay if throttling appears.
+- BPM has **no** planned automated source (see implementation-status note above) — out of scope.
+
+**Not yet implemented** — `src/lastfm_api.py` doesn't exist yet; this section documents the
+settled design for a future session.
+
 ## Stage 4 — Genre analysis (`src/genre_analysis.py`) — SCAFFOLD
-Build artist→genre/subgenre table from Spotify genres + `genre_hint` + `genre_overrides.json`;
-produce final dataset `song | artist | year | genre | subgenre | duration | bpm | popularity | liked`.
+Resolve each row's genre in priority order: (1) `genre_overrides.json` (manual, authoritative),
+(2) `genre_hint` (PDF-derived, Stage 2), (3) Last.fm top tags filtered against the existing
+`config.GENRE_KEYWORDS` vocabulary (Stage 3.5, once built), (4) Spotify `artist_genres` (kept as
+a fallback in case Extended Quota Mode is ever granted). Produce final dataset
+`song | artist | year | genre | subgenre | duration | bpm | popularity | liked` (`bpm` will stay
+null — see BPM-out-of-scope note above).
 
 ## Stage 5 — Playlist creation (`src/playlist_creation.py`) — SCAFFOLD
 Create a Spotify playlist from matched `track_id`s (batched ≤100 per add call).
@@ -164,7 +197,8 @@ balanced playlist around top 3 genres while keeping diversity. Visuals in `noteb
 
 ## Dependencies (`requirements.txt`)
 `pymupdf`, `pandas`, `rapidfuzz`, `spotipy`, `python-dotenv`, `matplotlib`, `seaborn`, `plotly`,
-`jupyter`. (`camelot`/`tabula` not needed — the PDF is text, not ruled tables.)
+`jupyter`, `requests` (declared for the planned Stage 3.5 `lastfm_api.py`, no SDK needed).
+(`camelot`/`tabula` not needed — the PDF is text, not ruled tables.)
 
 Install into the existing empty `.venv`:
 `.venv/Scripts/python.exe -m pip install -r requirements.txt`
@@ -174,6 +208,10 @@ Install into the existing empty `.venv`:
 2. Add Redirect URI `http://127.0.0.1:8888/callback`.
 3. Copy Client ID/Secret into `.env` (from `.env.example`):
    `SPOTIPY_CLIENT_ID=`, `SPOTIPY_CLIENT_SECRET=`, `SPOTIPY_REDIRECT_URI=http://127.0.0.1:8888/callback`.
+
+## Last.fm credentials setup (planned, for Stage 3.5)
+1. Get a free API key at last.fm/api/account/create.
+2. Copy it into `.env` (from `.env.example`): `LASTFM_API_KEY=`.
 
 ---
 
@@ -198,5 +236,10 @@ and `popularity` came back empty for every row, including major artists — conf
 app (Extended Quota Mode restriction, not a bug). Re-running the same slice hit the cache
 (20/20 cache hits, <1s) and reproduced an identical CSV — idempotent, like Stages 1–2.
 
+**Stage 3.5 (Last.fm genre tags):** planned, not yet implemented — design documented above,
+verification deferred to the session that builds `src/lastfm_api.py` (fetch tags for a sample of
+artists, confirm Latin-genre coverage, confirm cache idempotency).
+
 **Later stages:** run the full 1164-row pipeline through `spotify_api.py` when ready; Stage 4
-should plan around Spotify genres being unavailable (see note above).
+should plan around Spotify genres being unavailable and use the Stage 3.5 priority order above
+once Last.fm is implemented.

@@ -11,6 +11,7 @@ taste. See [context.md](context.md) for the full vision.
 | 1. PDF extraction | `src/pdf_extraction.py` | ✅ done |
 | 2. Cleaning / normalization | `src/cleaning.py` | ✅ done |
 | 3. Spotify matching | `src/spotify_api.py` | ✅ done |
+| 3.5. Last.fm genre tags | `src/lastfm_api.py` | 🟡 planned (design settled, not built) |
 | 4. Genre analysis | `src/genre_analysis.py` | 🟡 scaffold |
 | 5. Playlist creation | `src/playlist_creation.py` | 🟡 scaffold |
 | 6. Preference learning | `src/preferences.py` | 🟡 scaffold |
@@ -94,5 +95,16 @@ fixes to `artist_aliases.json`, and re-run. Cleaning is idempotent.
 > and Track objects. Stage 3 attempts both and degrades to null gracefully;
 > basic metadata (track, album, year, duration) still works reliably. Because
 > Spotify genres are effectively unavailable, Stage 4 relies on `genre_hint`
-> (from the PDF) and `genre_overrides.json` as the primary genre sources, not
-> Spotify's artist genres.
+> (from the PDF), `genre_overrides.json`, and the planned Last.fm tags (Stage
+> 3.5, below) as genre sources, not Spotify's artist genres. BPM has no planned
+> automated source — Spotify no longer exposes `preview_url` either, so local
+> audio analysis isn't an option, and no free API has verified coverage of this
+> catalog.
+
+## Last.fm credentials (needed for Stage 3.5, not yet implemented)
+
+1. Get a free API key at https://www.last.fm/api/account/create
+2. Copy `.env.example` → `.env` (if not done already) and fill in `LASTFM_API_KEY`.
+
+Last.fm's crowd-sourced tags will supplement `genre_hint`/`genre_overrides.json` for genre
+coverage once `src/lastfm_api.py` is built (see PLAN.md's Stage 3.5 section for the design).
