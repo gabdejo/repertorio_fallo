@@ -3,10 +3,11 @@
 Input : data/processed/songs_clean.csv
 Output: data/processed/songs_metadata.csv
 
-Requires Spotify credentials in a .env file (see .env.example). Track and
-artist-genre lookups are cached under data/cache/ so re-runs are fast and
-idempotent. Audio features are attempted but degrade gracefully to null if
-the endpoint is unavailable (deprecated for new apps since Nov 2024).
+Requires Spotify credentials in a .env file (see .env.example). Track lookups
+are cached under data/cache/ so re-runs are fast and idempotent. Audio
+features are attempted but degrade gracefully to null if the endpoint is
+unavailable (deprecated for new apps since Nov 2024). If Spotify's rate limit
+is hit, the run stops cleanly and saves progress - re-run later to resume.
 
 Run:  python -m src.spotify_api
 """
@@ -14,12 +15,17 @@ from __future__ import annotations
 
 import json
 import os
+import time
 
 import pandas as pd
 from dotenv import load_dotenv
 from rapidfuzz import fuzz
 
 from . import config
+
+# Delay between Spotify calls to avoid tripping the API's rate limit (which,
+# once tripped, can impose a multi-hour cooldown - see get_client()'s retries=0).
+REQUEST_DELAY_S = 0.1
 
 # Columns the rest of the pipeline expects this stage to produce.
 METADATA_COLUMNS = [
@@ -43,7 +49,10 @@ def get_client():
             "Spotify credentials missing. Copy .env.example to .env and fill it in."
         )
     auth = SpotifyOAuth(scope="playlist-modify-private playlist-modify-public")
-    return spotipy.Spotify(auth_manager=auth)
+    # retries=0: on a 429 we want to catch it ourselves and stop cleanly (see
+    # run()) rather than have spotipy/urllib3 block for the full Retry-After
+    # window, which can be tens of thousands of seconds.
+    return spotipy.Spotify(auth_manager=auth, retries=0)
 
 
 def _score(query_song: str, query_artist: str, track: dict) -> float:
@@ -112,14 +121,12 @@ def _summarize_match(match: dict | None) -> dict | None:
     }
 
 
-def _fetch_artist_genres(sp, artist_id: str | None, genre_cache: dict) -> list[str]:
-    if not artist_id:
-        return []
-    if artist_id in genre_cache:
-        return genre_cache[artist_id]
-    genres = sp.artist(artist_id).get("genres", [])
-    genre_cache[artist_id] = genres
-    return genres
+# NOTE: sp.artist() genre/popularity lookups were removed here - verified in
+# testing that apps without Extended Quota Mode get an empty `genres` list for
+# every artist, so the call only doubled our request volume for zero benefit
+# (a real contributor to tripping Spotify's rate limit). artist_genres stays
+# in the output schema (always empty) for Stage 4 fallback compatibility, and
+# can be restored if Extended Quota Mode is ever granted.
 
 
 def run(
@@ -137,13 +144,15 @@ def run(
     if limit is not None:
         df = df.head(limit).copy()
 
+    import spotipy
+
     sp = get_client()
     track_cache = _load_cache(config.SPOTIFY_TRACK_CACHE_JSON)
-    genre_cache = _load_cache(config.SPOTIFY_ARTIST_GENRE_CACHE_JSON)
 
     rows = []
     cache_hits = 0
     n = len(df)
+    stopped_early = False
     for i, row in enumerate(df.itertuples(index=False), start=1):
         song = row.song_clean
         artist = row.artist_corrected
@@ -153,11 +162,23 @@ def run(
             cache_hits += 1
             summary = track_cache[key]
         else:
-            match = match_row(sp, song, artist)
+            try:
+                match = match_row(sp, song, artist)
+            except spotipy.SpotifyException as exc:
+                if exc.http_status == 429:
+                    retry_after = (exc.headers or {}).get("Retry-After", "unknown")
+                    _save_cache(config.SPOTIFY_TRACK_CACHE_JSON, track_cache)
+                    print(
+                        f"[stage 3] rate limited after {i - 1}/{n} rows "
+                        f"(retry after {retry_after}s). Progress saved to cache; "
+                        f"re-run later to resume from here."
+                    )
+                    stopped_early = True
+                    break
+                raise
             summary = _summarize_match(match)
             track_cache[key] = summary
-
-        genres = _fetch_artist_genres(sp, (summary or {}).get("artist_id"), genre_cache)
+            time.sleep(REQUEST_DELAY_S)
 
         out = {
             "line_no": row.line_no,
@@ -169,7 +190,7 @@ def run(
             "year": summary.get("year") if summary else None,
             "duration_ms": summary.get("duration_ms") if summary else None,
             "popularity": summary.get("popularity") if summary else None,
-            "artist_genres": ", ".join(genres) if genres else None,
+            "artist_genres": None,
             "match_score": summary.get("match_score") if summary else None,
             "low_confidence_match": (
                 summary is None
@@ -180,17 +201,16 @@ def run(
 
         if i % 25 == 0:
             _save_cache(config.SPOTIFY_TRACK_CACHE_JSON, track_cache)
-            _save_cache(config.SPOTIFY_ARTIST_GENRE_CACHE_JSON, genre_cache)
         if i % 50 == 0 or i == n:
             print(f"[stage 3] matched {i}/{n} (cache hits: {cache_hits})")
 
     _save_cache(config.SPOTIFY_TRACK_CACHE_JSON, track_cache)
-    _save_cache(config.SPOTIFY_ARTIST_GENRE_CACHE_JSON, genre_cache)
 
     out_df = pd.DataFrame(rows, columns=METADATA_COLUMNS[:-6])
 
     # Batch audio-features lookups (Spotify allows up to 100 ids per call).
-    track_ids = [t for t in out_df["track_id"].tolist() if t]
+    # Skip entirely if we just got rate limited, to avoid tripping it again.
+    track_ids = [] if stopped_early else [t for t in out_df["track_id"].tolist() if t]
     features: dict[str, dict] = {}
     for start in range(0, len(track_ids), 100):
         chunk = track_ids[start : start + 100]
@@ -216,10 +236,9 @@ def run(
 
     matched = out_df["track_id"].notna().sum()
     low_conf = out_df["low_confidence_match"].sum()
-    with_genres = out_df["artist_genres"].notna().sum()
+    status = "PARTIAL (rate limited, re-run to continue)" if stopped_early else "done"
     print(
-        f"[stage 3] done: {matched}/{n} matched, {low_conf} low-confidence, "
-        f"{with_genres} with artist genres -> {out_csv}"
+        f"[stage 3] {status}: {matched}/{n} matched, {low_conf} low-confidence -> {out_csv}"
     )
     return out_df
 

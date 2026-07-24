@@ -156,7 +156,7 @@ re-running stage 2 re-applies them (idempotent — verified).
   rows so an interrupted run doesn't lose progress; re-running is fast and idempotent.
 - Output `songs_metadata.csv`.
 
-## Stage 3.5 — Last.fm genre tags (`src/lastfm_api.py`) — PLANNED (design settled, not built)
+## Stage 3.5 — Last.fm genre tags (`src/lastfm_api.py`) — DONE
 
 **Why:** Spotify apps without Extended Quota Mode return no `genres`/`popularity` at all (see
 Stage 3 verification below), leaving Stage 4 with only `genre_hint` (153/1164 PDF-annotated rows)
@@ -175,16 +175,27 @@ and hand-maintained `genre_overrides.json`. Last.fm's free, crowd-sourced tag AP
   artist, not per song — no special handling needed beyond a small delay if throttling appears.
 - BPM has **no** planned automated source (see implementation-status note above) — out of scope.
 
-**Not yet implemented** — `src/lastfm_api.py` doesn't exist yet; this section documents the
-settled design for a future session.
+**Implemented** as designed above.
 
-## Stage 4 — Genre analysis (`src/genre_analysis.py`) — SCAFFOLD
-Resolve each row's genre in priority order: (1) `genre_overrides.json` (manual, authoritative),
-(2) `genre_hint` (PDF-derived, Stage 2), (3) Last.fm top tags filtered against the existing
-`config.GENRE_KEYWORDS` vocabulary (Stage 3.5, once built), (4) Spotify `artist_genres` (kept as
-a fallback in case Extended Quota Mode is ever granted). Produce final dataset
-`song | artist | year | genre | subgenre | duration | bpm | popularity | liked` (`bpm` will stay
-null — see BPM-out-of-scope note above).
+## Stage 4 — Genre analysis (`src/genre_analysis.py`) — DONE
+Resolves each row's genre in priority order: (1) `genre_overrides.json` (manual, authoritative),
+(2) `genre_hint` (PDF-derived, Stage 2), (3) Last.fm top tags filtered against the new
+`config.GENRE_CANONICAL` map (which also collapses spelling variants, e.g.
+"regeton"/"reggaeton"/"regueton" -> "Reggaetón"), (4) Spotify `artist_genres` (fallback in case
+Extended Quota Mode is ever granted; currently always empty). Produces `songs_final.csv`:
+`song | artist | year | genre | subgenre | duration | bpm | popularity | liked` (`bpm` stays
+null — see BPM-out-of-scope note above; `liked` is blank for manual rating).
+
+Verified on the 20-song slice: 17/20 resolved (2 via override, 1 via hint, 14 via Last.fm, 3
+missing for lack of any signal); spot-checked Grupo 5 -> Cumbia/Cumbia Peruana (override), Juan
+Luis Guerra -> Merengue (Last.fm), Maria Becerra -> Reggaetón (Last.fm, canonical spelling).
+
+Scaled up to the 576-song partial Spotify run (see Stage 3 incident note above): Last.fm tagged
+246/329 unique artists (`lastfm_api.run(in_csv=config.SONGS_METADATA_CSV)`, scoped to just that
+slice's artists), and Stage 4 resolved 425/576 songs (13 override, 63 hint, 349 Last.fm, 151
+missing). Most misses trace to garbled artist names from PDF/OCR cleanup (e.g. "Bon Jovie)",
+"Raw Alejandro" for "Rauw Alejandro", "Price Royce" for "Prince Royce") that don't match any
+Last.fm artist - fixable later via `data/dictionaries/artist_aliases.json`, not a Stage 4 issue.
 
 ## Stage 5 — Playlist creation (`src/playlist_creation.py`) — SCAFFOLD
 Create a Spotify playlist from matched `track_id`s (batched ≤100 per add call).
@@ -236,10 +247,21 @@ and `popularity` came back empty for every row, including major artists — conf
 app (Extended Quota Mode restriction, not a bug). Re-running the same slice hit the cache
 (20/20 cache hits, <1s) and reproduced an identical CSV — idempotent, like Stages 1–2.
 
-**Stage 3.5 (Last.fm genre tags):** planned, not yet implemented — design documented above,
-verification deferred to the session that builds `src/lastfm_api.py` (fetch tags for a sample of
-artists, confirm Latin-genre coverage, confirm cache idempotency).
+**Incident — full-run rate limit:** running the full 1164-song set with zero delay between
+requests (plus a now-removed, always-empty `sp.artist()` genre call doubling request volume)
+tripped Spotify's rate limit with a ~24h `Retry-After`. Fix: removed the pointless `sp.artist()`
+call entirely, added a 0.1s delay between requests, and set `retries=0` on the spotipy client so a
+429 is caught and the run stops cleanly (progress saved to cache, resumable) instead of spotipy
+blocking synchronously for the full cooldown. Verified the fix fails fast (~seconds, not hours)
+when still rate-limited. 576/1164 songs matched before the limit was hit; re-run once the cooldown
+passes to resume (cache makes already-matched rows instant).
 
-**Later stages:** run the full 1164-row pipeline through `spotify_api.py` when ready; Stage 4
-should plan around Spotify genres being unavailable and use the Stage 3.5 priority order above
-once Last.fm is implemented.
+**Stage 3.5 (Last.fm genre tags):** ran a 20-artist slice (`lastfm_api.run(limit=20)`) after
+Last.fm API key setup: 19/20 artists tagged (the 1 miss is a blank/unlisted artist name, expected);
+strong Latin-genre coverage confirmed (e.g. Juan Luis Guerra -> merengue/bachata/salsa,
+Grupo 5 -> cumbia, De La Ghetto -> Reggaeton, Marc Anthony -> salsa). Re-running the same slice hit
+the cache (no HTTP calls, identical `lastfm_tag_cache.json`) — idempotent, like Stages 1-3.
+
+**Later stages:** run the full 1164-row pipeline through `spotify_api.py` and `lastfm_api.py` when
+ready; Stage 4 should use the Stage 3.5 priority order above (overrides -> genre_hint -> Last.fm
+tags -> Spotify genres fallback).

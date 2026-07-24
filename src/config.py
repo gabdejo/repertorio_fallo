@@ -18,12 +18,13 @@ PDF_PATH = RAW / "lista_canciones.pdf"
 SONGS_RAW_CSV = PROCESSED / "songs_raw.csv"
 SONGS_CLEAN_CSV = PROCESSED / "songs_clean.csv"
 SONGS_METADATA_CSV = PROCESSED / "songs_metadata.csv"
+SONGS_FINAL_CSV = PROCESSED / "songs_final.csv"
 
 ARTIST_ALIASES_JSON = DICTIONARIES / "artist_aliases.json"
 GENRE_OVERRIDES_JSON = DICTIONARIES / "genre_overrides.json"
 
 SPOTIFY_TRACK_CACHE_JSON = CACHE / "spotify_track_cache.json"
-SPOTIFY_ARTIST_GENRE_CACHE_JSON = CACHE / "spotify_artist_genre_cache.json"
+LASTFM_TAG_CACHE_JSON = CACHE / "lastfm_tag_cache.json"
 
 # --- Parsing constants -----------------------------------------------------
 # Each repertory line looks like:  "123. SONG NAME        ARTIST"
@@ -62,6 +63,37 @@ GENRE_KEYWORDS = [
     "bolero",
     "tropical",
 ]
+
+# Canonical spelling for each keyword group above (lowercase variant -> one
+# Title Case label). Used by Stage 4 to collapse spelling variants (e.g.
+# "regeton"/"reggaeton"/"regueton") into a single genre value.
+GENRE_CANONICAL: dict[str, str] = {
+    "merengue": "Merengue",
+    "cumbia": "Cumbia",
+    "salsa": "Salsa",
+    "bachata": "Bachata",
+    "reggaeton": "Reggaetón",
+    "reggaetón": "Reggaetón",
+    "regeton": "Reggaetón",
+    "regueton": "Reggaetón",
+    "reggae": "Reggae",
+    "regaee": "Reggae",
+    "latin pop": "Latin Pop",
+    "pop latino": "Latin Pop",
+    "balada": "Balada",
+    "rock and roll": "Rock And Roll",
+    "rock": "Rock",
+    "pop": "Pop",
+    "house": "House",
+    "electronic": "Electronic",
+    "electronica": "Electronic",
+    "huayno": "Huayno",
+    "festejo": "Festejo",
+    "vals": "Vals",
+    "ranchera": "Ranchera",
+    "bolero": "Bolero",
+    "tropical": "Tropical",
+}
 
 # Multi-artist separators normalized to a canonical " & ". En-dash/em-dash and
 # " - " (hyphen padded with spaces) are used as separators in this PDF; a bare
