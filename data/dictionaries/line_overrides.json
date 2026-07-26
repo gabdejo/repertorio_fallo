@@ -1,0 +1,6 @@
+{
+  "_comment": "line_no (from data/processed/songs_raw.csv) -> manual {song, artist} fix, applied in Stage 2 before normal cleaning. Use for rows the PDF extraction got structurally wrong (e.g. song title and artist mashed into one column, empty artist). Example: \"123\": {\"song\": \"Correct Song\", \"artist\": \"Correct Artist\"}",
+  "20":{"song":"Agachadita","artist":"Mayonesa"},
+  "33":{"song":"Old Time Rock And Roll", "artist":"Bob Seger"},
+  "36":{"song":"Amame Una Vez Más"}
+}

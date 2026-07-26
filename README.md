@@ -79,6 +79,9 @@ Cleaning then:
 ### Editable dictionaries (re-run Stage 2 to apply)
 - `data/dictionaries/artist_aliases.json` — `"singer/typo" → "official artist"`
 - `data/dictionaries/genre_overrides.json` — `artist → {genre, subgenre}` (Stage 4)
+- `data/dictionaries/excluded_lines.json` — `line_no`s to drop entirely (medley/wildcard
+  PDF entries like "Huaynos Varios" that aren't a single song); look up the `line_no` in
+  `songs_raw.csv`
 
 Workflow: run Stage 2, open `songs_clean.csv`, triage `needs_review` rows, add
 fixes to `artist_aliases.json`, and re-run. Cleaning is idempotent.

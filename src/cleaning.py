@@ -6,6 +6,11 @@ Output: data/processed/songs_clean.csv
              artist_corrected, genre_hint, needs_review
 
 Behaviour:
+- Drops rows listed in data/dictionaries/excluded_lines.json (medley/wildcard
+  entries like "Huaynos Varios" that aren't a single song).
+- Applies manual song/artist fixes from data/dictionaries/line_overrides.json
+  for rows the PDF extraction got structurally wrong (e.g. song and artist
+  mashed into one column).
 - Pulls genre annotations out of the artist column into ``genre_hint``.
 - Normalizes casing / separators / quotes into ``song_clean`` & ``artist_clean``.
 - Applies the editable alias dictionary, and uses rapidfuzz to snap near
@@ -35,6 +40,23 @@ def _load_aliases() -> dict[str, str]:
     with open(config.ARTIST_ALIASES_JSON, encoding="utf-8") as f:
         data = json.load(f)
     return {k: v for k, v in data.items() if not k.startswith("_")}
+
+
+def _load_excluded_lines() -> set[int]:
+    if not config.EXCLUDED_LINES_JSON.exists():
+        return set()
+    with open(config.EXCLUDED_LINES_JSON, encoding="utf-8") as f:
+        return set(json.load(f).get("line_nos", []))
+
+
+def _load_line_overrides() -> dict[int, dict]:
+    """line_no -> {"song": ..., "artist": ...} - manual fixes for rows the PDF
+    got structurally wrong (e.g. song+artist mashed into one column)."""
+    if not config.LINE_OVERRIDES_JSON.exists():
+        return {}
+    with open(config.LINE_OVERRIDES_JSON, encoding="utf-8") as f:
+        data = json.load(f)
+    return {int(k): v for k, v in data.items() if not k.startswith("_")}
 
 
 # Pre-compile the bare-genre keyword pattern (whole-word, case-insensitive).
@@ -126,6 +148,18 @@ def clean(in_csv=config.SONGS_RAW_CSV, out_csv=config.SONGS_CLEAN_CSV) -> pd.Dat
         )
 
     df = pd.read_csv(in_csv, encoding="utf-8").fillna({"artist_raw": ""})
+    excluded_lines = _load_excluded_lines()
+    n_excluded = int(df["line_no"].isin(excluded_lines).sum())
+    df = df[~df["line_no"].isin(excluded_lines)]
+
+    line_overrides = _load_line_overrides()
+    for line_no, fix in line_overrides.items():
+        mask = df["line_no"] == line_no
+        if "song" in fix:
+            df.loc[mask, "song_raw"] = fix["song"]
+        if "artist" in fix:
+            df.loc[mask, "artist_raw"] = fix["artist"]
+
     aliases = _load_aliases()
     # Normalize alias keys through the *same* pipeline as artist_clean so keys
     # written with "Y"/"/" separators still match data normalized to " & ".
@@ -195,7 +229,7 @@ def clean(in_csv=config.SONGS_RAW_CSV, out_csv=config.SONGS_CLEAN_CSV) -> pd.Dat
     n_review = int(out["needs_review"].sum())
     n_missing = int((out["artist_clean"] == "").sum())
     n_suggest = int((out["fuzzy_suggestion"] != "").sum())
-    print(f"[stage 2] Cleaned {len(out)} rows.")
+    print(f"[stage 2] Cleaned {len(out)} rows ({n_excluded} excluded via excluded_lines.json).")
     print(f"[stage 2] Alias corrections applied: {n_corrected}.")
     print(f"[stage 2] Rows missing an artist: {n_missing}.")
     print(f"[stage 2] Possible-duplicate suggestions: {n_suggest}.")

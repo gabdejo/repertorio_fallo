@@ -3,7 +3,9 @@
 Input : data/processed/songs_metadata.csv, data/processed/songs_clean.csv,
         data/cache/lastfm_tag_cache.json, data/dictionaries/genre_overrides.json
 Output: data/processed/songs_final.csv
-    columns: song, artist, year, genre, subgenre, duration, bpm, popularity, liked
+    columns: line_no, song, artist, year, genre, subgenre, duration, bpm, popularity, liked
+    (line_no is kept as a stable cross-reference back to songs_raw.csv/songs_clean.csv -
+    row position isn't reliable since rows can be excluded or tables re-sorted)
 
 Genre is resolved per song in priority order: (1) genre_overrides.json
 (manual, authoritative), (2) genre_hint (PDF-derived, Stage 2), (3) Last.fm
@@ -89,7 +91,10 @@ def run(
     hints = pd.read_csv(clean_csv, encoding="utf-8", keep_default_na=False)[
         ["line_no", "genre_hint"]
     ]
+    # left-merge can leave NaN genre_hint for metadata rows stale relative to a
+    # since-excluded/regenerated songs_clean.csv - treat those as "no hint".
     df = meta.merge(hints, on="line_no", how="left")
+    df["genre_hint"] = df["genre_hint"].fillna("")
 
     overrides = load_overrides()
     lastfm_cache = _load_lastfm_cache()
@@ -107,6 +112,7 @@ def run(
 
         rows.append(
             {
+                "line_no": row.line_no,
                 "song": row.song_clean,
                 "artist": artist,
                 "year": row.year,
@@ -120,7 +126,8 @@ def run(
         )
 
     out_df = pd.DataFrame(
-        rows, columns=["song", "artist", "year", "genre", "subgenre", "duration", "bpm", "popularity", "liked"]
+        rows,
+        columns=["line_no", "song", "artist", "year", "genre", "subgenre", "duration", "bpm", "popularity", "liked"],
     )
     out_df.to_csv(out_csv, index=False, encoding="utf-8")
 

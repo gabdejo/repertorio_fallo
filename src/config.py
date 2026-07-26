@@ -22,6 +22,8 @@ SONGS_FINAL_CSV = PROCESSED / "songs_final.csv"
 
 ARTIST_ALIASES_JSON = DICTIONARIES / "artist_aliases.json"
 GENRE_OVERRIDES_JSON = DICTIONARIES / "genre_overrides.json"
+EXCLUDED_LINES_JSON = DICTIONARIES / "excluded_lines.json"
+LINE_OVERRIDES_JSON = DICTIONARIES / "line_overrides.json"
 
 SPOTIFY_TRACK_CACHE_JSON = CACHE / "spotify_track_cache.json"
 LASTFM_TAG_CACHE_JSON = CACHE / "lastfm_tag_cache.json"
