@@ -197,8 +197,19 @@ missing). Most misses trace to garbled artist names from PDF/OCR cleanup (e.g. "
 "Raw Alejandro" for "Rauw Alejandro", "Price Royce" for "Prince Royce") that don't match any
 Last.fm artist - fixable later via `data/dictionaries/artist_aliases.json`, not a Stage 4 issue.
 
-## Stage 5 — Playlist creation (`src/playlist_creation.py`) — SCAFFOLD
-Create a Spotify playlist from matched `track_id`s (batched ≤100 per add call).
+## Stage 5 — Playlist creation (`src/playlist_creation.py`) — DONE (manual-playlist workaround)
+Adds matched `track_id`s to an existing playlist (batched ≤100 per add call). `run(playlist_id, limit=None)`.
+
+**Discovered:** `POST /users/{id}/playlists` (playlist *creation*) returns a `403 Forbidden` for
+Development-mode apps, even for the app owner with correct `playlist-modify-private`/`-public`
+scopes granted (verified: token, scope, and user ID all correct - Spotify just refuses the write).
+Same root cause as the genres/popularity/Extended-Quota-Mode restriction in Stage 3. Adding tracks
+to an *existing* playlist, however, works fine under the same scopes - so the workflow is: create
+the (empty) playlist once by hand in the Spotify app/web UI, then run
+`python -m src.playlist_creation <playlist_id_or_url>`.
+
+Verified: added 5 tracks to a manually-created test playlist ("Repertorio Prueba"), confirmed via
+the returned playlist URL.
 
 ## Stage 6 — Preference learning (`src/preferences.py`) — SCAFFOLD
 After user fills `liked` (1/0), aggregate ratings by genre/artist/decade/BPM/energy; generate a
