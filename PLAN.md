@@ -211,9 +211,48 @@ the (empty) playlist once by hand in the Spotify app/web UI, then run
 Verified: added 5 tracks to a manually-created test playlist ("Repertorio Prueba"), confirmed via
 the returned playlist URL.
 
-## Stage 6 — Preference learning (`src/preferences.py`) — SCAFFOLD
-After user fills `liked` (1/0), aggregate ratings by genre/artist/decade/BPM/energy; generate a
-balanced playlist around top 3 genres while keeping diversity. Visuals in `notebooks/exploration.ipynb`.
+## Stage 6 — Screen playlist workflow (`src/preferences.py`) — DONE (redesigned)
+Superseded the original "auto-generate a balanced playlist from ratings" concept: the user
+hand-curates a "screen" playlist directly in Spotify (a subset of the repertoire plus occasional
+outside additions), and it stays the source of truth for favoritism — membership in it *is* the
+`liked` signal, no separate rating scheme needed. Stage 6 instead stitches together the tools built
+to support that curation workflow, as CLI subcommands:
+
+- `check <song-or-list>` — fuzzy-check a candidate song (or list file, reusing `repertoire_check.py`)
+  against the repertoire, attaching a Spotify `track_id` for confirmed matches so the output is
+  directly actionable.
+- `add <ids-or-csv>` — add confirmed track(s) to the screen playlist (reuses
+  `playlist_creation.add_in_batches`); accepts explicit `track_id`s or a `check` output CSV.
+- `report` — fetch the screen playlist live (reuses `playlist_diff.get_playlist_tracks`), join back
+  to `songs_final.csv` by `track_id`, and fetch Last.fm genres live for anything outside the
+  repertoire. Returns `(df, unmatched)`.
+- `label` — export/reload the two missing-genre worklists for the screen playlist: matched-but-
+  ungenred songs (fix via `genre_overrides.json`) vs. unmatched songs (fill-in CSV loop:
+  `data/processed/playlist_review_unmatched_missing_genre.csv`).
+
+`SCREEN_PLAYLIST_ID` in `.env` sets the default playlist (same pattern as `REPERTORIO_PLAYLIST_ID`).
+`notebooks/playlist_review.ipynb` is now a thin wrapper calling `preferences.report()` for its data
+(charts + interactive tables on top), rather than duplicating the fetch/join/Last.fm logic inline —
+avoids drift between the notebook and the CLI. Verified: `check`/`add` round-tripped against the
+test playlist; `report`/`label` reproduced the notebook's exact prior numbers (183/248 matched,
+131/183 with genre, 35/65 unmatched genres, 52+30 missing-genre worklist) with no behavior drift
+after the refactor. Also fixed a real bug caught during this rewrite: the `label` CSV-reload merge
+assumed matching array lengths that only held before any de-duplication — a length-mismatch crash,
+fixed in both `preferences.py` and the notebook's identical (now-corrected) copy.
+
+**ISRC catalog-duplicate recovery:** `report()`'s track_id-only join was missing real matches -
+discovered via a manually-added screen-playlist track ("Cariñito"/Los Hijos del Sol) that showed as
+unmatched despite being in the repertoire. Root cause: Spotify's own catalog sometimes lists the
+identical recording (same ISRC, same album/release date) under two different `track_id`s; the
+repertoire and the screen playlist each ended up with a different one. Fixed with a scoped ISRC
+recovery pass (`_recover_catalog_duplicates` in `preferences.py`) - not a full ISRC join, since the
+plural `/v1/tracks` (batch) endpoint returns a flat `403` for this Development-mode app (even for 2
+ids; only singular `/v1/tracks/{id}` works), making ISRC lookups one API call each. Scoped to just
+currently-unmatched screen tracks plus their single best fuzzy song/artist candidate in the
+repertoire (reusing `repertoire_check._score`), keeping the call count small (~90 calls, ~35s) and
+cached (`data/cache/isrc_cache.json`) instead of the ~1,383 calls a full repertoire+screen ISRC
+fetch would have needed. Verified: recovered 10 real matches (183 -> 193/248), including the
+Cariñito case, in a re-run of both the CLI and `playlist_review.ipynb`.
 
 ---
 

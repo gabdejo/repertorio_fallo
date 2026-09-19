@@ -31,14 +31,22 @@ def remove_in_batches(sp, playlist_id: str, track_ids: list[str], size: int = 10
         sp.playlist_remove_all_occurrences_of_items(playlist_id, track_ids[i : i + size])
 
 
+def clear(sp, playlist_id: str) -> None:
+    """Empty a playlist (replace its contents with nothing) - one call, no batching needed."""
+    sp.playlist_replace_items(playlist_id, [])
+
+
 def run(
     playlist_id: str,
     metadata_csv=config.SONGS_METADATA_CSV,
     limit: int | None = None,
     remove: bool = False,
+    clear_first: bool = False,
 ) -> str:
     """Add (or, with remove=True, remove) matched tracks on an existing playlist
-    (create it manually first - see module docstring)."""
+    (create it manually first - see module docstring). clear_first=True empties
+    the playlist before adding - use for a clean re-ingestion instead of
+    duplicating unchanged tracks."""
     if not metadata_csv.exists():
         raise FileNotFoundError(f"{metadata_csv} not found. Run stage 3 (src.spotify_api) first.")
 
@@ -50,6 +58,13 @@ def run(
         raise ValueError("No matched track_ids found.")
 
     sp = spotify_api.get_client()
+
+    if clear_first:
+        if remove:
+            raise ValueError("clear_first and remove are mutually exclusive.")
+        clear(sp, playlist_id)
+        print("[stage 5] cleared playlist before re-ingesting")
+
     if remove:
         remove_in_batches(sp, playlist_id, track_ids)
         verb = "removed"
@@ -75,6 +90,9 @@ if __name__ == "__main__":
         "Defaults to REPERTORIO_PLAYLIST_ID in .env if omitted.",
     )
     parser.add_argument("--remove", action="store_true", help="remove matched tracks instead of adding them")
+    parser.add_argument(
+        "--clear", action="store_true", help="empty the playlist first, for a clean re-ingestion (no duplicates)"
+    )
     parser.add_argument("--limit", type=int, default=None, help="only process the first N matched tracks")
     args = parser.parse_args()
 
@@ -85,4 +103,4 @@ if __name__ == "__main__":
             "No playlist given. Pass one, or set REPERTORIO_PLAYLIST_ID in .env."
         )
 
-    run(playlist_id, limit=args.limit, remove=args.remove)
+    run(playlist_id, limit=args.limit, remove=args.remove, clear_first=args.clear)

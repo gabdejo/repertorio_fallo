@@ -1,4 +1,4 @@
 {
   "_comment": "line_no values (from data/processed/songs_raw.csv) to drop in Stage 2 - medley/wildcard entries like 'Huaynos Varios' or 'Hora Hip Hop 90's' that aren't a single song and shouldn't hit Spotify/Last.fm.",
-  "line_nos": [456, 462]
+  "line_nos": [456, 462, 843, 848, 850, 852]
 }

@@ -27,6 +27,7 @@ LINE_OVERRIDES_JSON = DICTIONARIES / "line_overrides.json"
 
 SPOTIFY_TRACK_CACHE_JSON = CACHE / "spotify_track_cache.json"
 LASTFM_TAG_CACHE_JSON = CACHE / "lastfm_tag_cache.json"
+ISRC_CACHE_JSON = CACHE / "isrc_cache.json"
 
 # --- Parsing constants -----------------------------------------------------
 # Each repertory line looks like:  "123. SONG NAME        ARTIST"

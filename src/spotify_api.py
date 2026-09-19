@@ -86,6 +86,27 @@ def fetch_audio_features(sp, track_ids: list[str]) -> dict[str, dict]:
         return {}
 
 
+def fetch_isrcs(sp, track_ids: list[str]) -> dict[str, str | None]:
+    """Fetch ISRC codes for tracks, cached under data/cache/isrc_cache.json.
+    ISRC identifies the actual recording, unlike track_id - Spotify's catalog
+    sometimes has the same recording listed under two different track_ids
+    (seen with some Latin/regional catalog entries).
+
+    One call per track (not batched): the plural /v1/tracks endpoint returns a
+    flat 403 for this Development-mode app, even for 2 ids - same restriction
+    pattern as other bulk endpoints. Only the singular /v1/tracks/{id} works.
+    Keep the caller's candidate list small; this is comparatively expensive."""
+    cache = _load_cache(config.ISRC_CACHE_JSON)
+    to_fetch = [t for t in dict.fromkeys(track_ids) if t and t not in cache]
+    for tid in to_fetch:
+        track = sp.track(tid)
+        cache[tid] = (track or {}).get("external_ids", {}).get("isrc")
+        time.sleep(REQUEST_DELAY_S)
+    if to_fetch:
+        _save_cache(config.ISRC_CACHE_JSON, cache)
+    return {t: cache.get(t) for t in track_ids if t}
+
+
 def _load_cache(path) -> dict:
     if path.exists():
         with open(path, "r", encoding="utf-8") as f:

@@ -15,8 +15,7 @@ __pycache__/
 .cache
 .cache-*
 
-# Processed data (regenerable). Comment out to version the CSVs.
+# Spotify/Last.fm API caches are versioned on purpose (rate-limited to rebuild,
+# see feedback_external-api-pacing memory). Processed CSVs are cheap to rebuild
+# from the cache + dictionaries, so those stay regenerable/ignored.
 data/processed/*.csv
-
-# Spotify API caches (regenerable)
-data/cache/

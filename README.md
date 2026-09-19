@@ -14,7 +14,7 @@ taste. See [context.md](context.md) for the full vision.
 | 3.5. Last.fm genre tags | `src/lastfm_api.py` | ✅ done |
 | 4. Genre analysis | `src/genre_analysis.py` | ✅ done |
 | 5. Playlist creation | `src/playlist_creation.py` | ✅ done (create the playlist manually first — see PLAN.md) |
-| 6. Preference learning | `src/preferences.py` | 🟡 scaffold |
+| 6. Screen playlist workflow | `src/preferences.py` | ✅ done (`check`/`add`/`report`/`label` — see PLAN.md) |
 
 ## Setup
 

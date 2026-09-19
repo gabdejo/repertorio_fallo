@@ -1,5 +1,6 @@
 {
   "_comment": "Maps a cleaned artist name (Title Case) to its canonical/official name. Hand-edit and re-run src.cleaning to re-apply. Keys are matched after basic normalization.",
+  "Alma Bella":"Alma Bella De Nilver Huarac",
   "Beatles": "The Beatles",
   "Freddie Mercury": "Queen",
   "Selana": "Selena",
