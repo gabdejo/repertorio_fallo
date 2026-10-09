@@ -11618,5 +11618,45 @@
     "duration_ms": 247595,
     "popularity": null,
     "match_score": 100.0
+  },
+  "Tu Eres Ajena|||Eddy Herrera": {
+    "track_id": "1jD48pmiHMSVHHPzKLi4P3",
+    "official_artist": "Eddy Herrera",
+    "artist_id": "4yNdrUaF54csrLixVTnqzC",
+    "album": "Atrevido",
+    "year": "2001",
+    "duration_ms": 293106,
+    "popularity": null,
+    "match_score": 100.0
+  },
+  "El Murguero|||Los Auténticos Decadentes": {
+    "track_id": "2cDkpGaVD0rbZkUZ6m2mMk",
+    "official_artist": "Los Auténticos Decadentes",
+    "artist_id": "3HrbmsYpKjWH1lzhad7alj",
+    "album": "Mi Vida Loca",
+    "year": "1995",
+    "duration_ms": 321173,
+    "popularity": null,
+    "match_score": 100.0
+  },
+  "Mi Declaración|||Bigal & L Jake": {
+    "track_id": "1mVyqlOFiomPM0Ovojg84Y",
+    "official_artist": "Bigal & L Jake",
+    "artist_id": "4KepPsJTbS1Ei7O7UUIlA9",
+    "album": "Mi declaración",
+    "year": "2013",
+    "duration_ms": 217469,
+    "popularity": null,
+    "match_score": 82.9
+  },
+  "Niña Bonita|||Chino & Nacho": {
+    "track_id": "4u5xLMRN0dgKBFFN8FiNgv",
+    "official_artist": "Chino & Nacho",
+    "artist_id": "5NS0854TqZQVoRmJKSWtFZ",
+    "album": "Mi Niña Bonita - Reloaded",
+    "year": "2010",
+    "duration_ms": 216786,
+    "popularity": null,
+    "match_score": 100.0
   }
 }

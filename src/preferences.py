@@ -14,10 +14,12 @@ rating needed. This stage stitches together the tools built to support that:
     report                 Fetch the screen playlist live, join it back to
                             songs_final.csv by track_id, and print genre/year
                             coverage. Anything outside the repertoire gets a
-                            live Last.fm genre lookup.
-    label                  Export/reload the two missing-genre worklists for
-                            the screen playlist (matched -> fix via
-                            genre_overrides.json; unmatched -> fill-in CSV).
+                            live Last.fm genre lookup, overridable via
+                            unmatched_genre_overrides.json.
+    label                  Export the two missing-genre worklists for the
+                            screen playlist (matched -> fix via
+                            genre_overrides.json; unmatched -> fix via
+                            unmatched_genre_overrides.json), read-only.
 
 Run:  python -m src.preferences <check|add|report|label> ...
 """
@@ -164,9 +166,11 @@ def report(playlist_id: str | None = None, out_csv=None) -> tuple[pd.DataFrame, 
 
     unmatched = df[df["line_no"].isna()][["name", "artist"]].copy()
     tags_by_artist = lastfm_api.fetch_artist_tags(unmatched["artist"].tolist())
+    overrides = genre_analysis.load_overrides(config.UNMATCHED_GENRE_OVERRIDES_JSON)
     unmatched["genre"] = unmatched["artist"].map(
-        lambda a: genre_analysis._first_canonical(tags_by_artist.get(a, []))
+        lambda a: overrides.get(a, {}).get("genre") or genre_analysis._first_canonical(tags_by_artist.get(a, []))
     )
+    df.loc[unmatched.index, "genre"] = unmatched["genre"]
 
     matched = df[df["line_no"].notna()]
     n_pipeline = matched["genre"].notna().sum()
@@ -198,24 +202,11 @@ def label(playlist_id: str | None = None) -> None:
         f"-> fix via genre_overrides.json, see {MATCHED_MISSING_CSV}"
     )
 
-    still_missing = unmatched[unmatched["genre"].isna()][["name", "artist"]].copy()
-    if UNMATCHED_FILL_CSV.exists():
-        filled = pd.read_csv(UNMATCHED_FILL_CSV, keep_default_na=False)
-        filled = filled[filled["genre"] != ""].drop_duplicates(subset=["name", "artist"])
-        # left-merge on the deduped fill list preserves unmatched's row order/count 1:1,
-        # so this Series can be safely re-indexed onto unmatched before filling nulls.
-        merged_genre = unmatched.merge(filled, on=["name", "artist"], how="left", suffixes=("", "_filled"))[
-            "genre_filled"
-        ]
-        unmatched["genre"] = unmatched["genre"].fillna(pd.Series(merged_genre.values, index=unmatched.index))
-        still_missing = unmatched[unmatched["genre"].isna()][["name", "artist"]].copy()
-        print(f"[preferences label] reloaded {len(filled)} hand-filled genres from {UNMATCHED_FILL_CSV}")
-
-    still_missing["genre"] = ""  # fill this column by hand, save, re-run
+    still_missing = unmatched[unmatched["genre"].isna()][["name", "artist"]]
     still_missing.to_csv(UNMATCHED_FILL_CSV, index=False)
     print(
         f"[preferences label] {len(still_missing)} unmatched songs still need a genre "
-        f"-> fill in {UNMATCHED_FILL_CSV}, save, re-run"
+        f"-> fix via {config.UNMATCHED_GENRE_OVERRIDES_JSON}, see {UNMATCHED_FILL_CSV}"
     )
 
 

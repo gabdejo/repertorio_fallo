@@ -1,0 +1,22 @@
+{
+  "_comment": "artist (exact, as it appears in the screen playlist's Spotify data) -> manual {genre} for songs OUTSIDE the repertoire. Checked before the live Last.fm lookup in `preferences report`/`label`. See playlist_review_unmatched_missing_genre.csv for which artists still need an entry.",
+  "Victor Muñoz": {"genre":"Latin Pop"},
+  "Carlos Vives, Michel Teló": {"genre":"Latin Pop"},
+  "Juan Magán, Gente De Zona": {"genre":"Salsa"},
+  "Armonía 10 de Walther Lozada": {"genre":"Cumbia"},
+  "Los 4, Mayco D' Alma": {"genre":"Salsa"},
+  "Merengue Latin Band": {"genre":"Merengue"},
+  "Fruko Y Sus Tesos, Wilson Saoko": {"genre":"Salsa"},
+  "Carlo Supo": {"genre":"Salsa"},
+  "Los 4": {"genre":"Salsa"},
+  "Los 4, Batule DJ, Los Barraza": {"genre":"Salsa"},
+  "Combinacion De La Habana, Nesty": {"genre":"Salsa"},
+  "Segovia Orquesta, Coti Loyola, Luchito Muñoz": {"genre":"Salsa"},
+  "3BallMTY, América Sierra, El Bebeto": {"genre":"Tropical"},
+  "Chino & Nacho, Baroni, El Potro Alvarez": {"genre":"Merengue"},
+  "Los 4, David Calzado y su Charanga Habanera": {"genre":"Salsa"},
+  "Gran Orquesta Internacional": {"genre":"Cumbia"},
+  "Ale Mendoza, Dyland & Lenny": {"genre":"Latin Pop"},
+  "Victor Muñoz, Oscarcito": {"genre":"Latin Pop"},
+  "Carlos Vives, J Alvarez": {"genre":"Latin Pop"}
+}

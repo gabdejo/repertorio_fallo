@@ -24,10 +24,10 @@ import pandas as pd
 from . import config
 
 
-def load_overrides() -> dict:
-    if not config.GENRE_OVERRIDES_JSON.exists():
+def load_overrides(path=config.GENRE_OVERRIDES_JSON) -> dict:
+    if not path.exists():
         return {}
-    with open(config.GENRE_OVERRIDES_JSON, encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         return {k: v for k, v in json.load(f).items() if not k.startswith("_")}
 
 
