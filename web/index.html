@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Final playlist</title>
+<style>
+  :root{font-family:system-ui,sans-serif;color-scheme:light dark}
+  body{margin:0;padding:12px;max-width:640px;margin-inline:auto}
+  h1{font-size:1.3em;margin:0;flex:1}
+  button,select{font:inherit;min-height:44px;padding:8px 14px;border-radius:8px;border:1px solid #8884;background:#8882;color:inherit;cursor:pointer}
+  button:disabled{opacity:.4}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  #now{border:1px solid #8884;border-radius:12px;padding:12px;margin:12px 0}
+  #now h2{margin:0 0 4px;font-size:1.3em}
+  .big{flex:1;font-size:1.2em;min-height:60px}
+  .in{background:#2a7;color:#fff}
+  .out{background:#c44;color:#fff}
+  .meter{display:grid;grid-template-columns:7em 1fr 5em;gap:6px;align-items:center;padding:6px 0;cursor:pointer}
+  .meter .bar{height:10px;background:#8883;border-radius:5px;overflow:hidden}
+  .meter .bar i{display:block;height:100%;background:#2a7}
+  .meter.over .bar i{background:#c44}
+  .meter.sel{font-weight:bold;text-decoration:underline}
+  .song{display:grid;grid-template-columns:1fr auto;gap:6px;padding:6px 0;border-top:1px solid #8883;align-items:center}
+  .song small{opacity:.7}
+  .song.cur{background:#8882}
+  .st{min-width:4em}
+  #status{min-height:1.2em;font-size:.9em;opacity:.8;margin:6px 0}
+  button.sel{outline:2px solid #2a7}
+  .gh{margin:14px 0 2px;font-size:1em;opacity:.8}
+  .fatal{background:#c44;color:#fff;padding:12px;border-radius:8px}
+</style>
+</head>
+<body>
+<div id="app">Cargando…</div>
+<script src="config.js"></script>
+<script>
+const C = window.CONFIG || {};
+const pid = s => (String(s || '').match(/[A-Za-z0-9]{22}/) || [''])[0];
+const FINAL = pid(C.finalPlaylistId), DESC = pid(C.descartesPlaylistId);
+const PROTECTED = new Set((C.protectedPlaylistIds || []).map(pid).filter(Boolean));
+const WRITABLE = new Set([FINAL, DESC].filter(Boolean));
+const REDIRECT = location.origin + location.pathname.replace(/index.html$/, '');
+const SCOPES = 'user-read-playback-state user-modify-playback-state playlist-read-private playlist-modify-private playlist-modify-public';
+
+const app = document.getElementById('app');
+const ls = {
+  get: k => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
+  set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// ---- config sanity: refuse to run if a protected playlist could ever be a write target
+function configError() {
+  if (!C.clientId) return 'config.js: clientId is empty.';
+  if (!FINAL || !DESC) return 'config.js: fill finalPlaylistId and descartesPlaylistId (create two empty playlists in Spotify first).';
+  if (FINAL === DESC) return 'config.js: finalPlaylistId and descartesPlaylistId must differ.';
+  for (const id of WRITABLE) if (PROTECTED.has(id)) return 'config.js: playlist ' + id + ' is protected (read-only) and cannot be a target.';
+  return null;
+}
+
+// ---- auth (PKCE, no client secret)
+let token = ls.get('sp_token');
+const b64url = buf => btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+async function login() {
+  const verifier = b64url(crypto.getRandomValues(new Uint8Array(48)));
+  ls.set('pkce_verifier', verifier);
+  const challenge = b64url(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier)));
+  const p = new URLSearchParams({ client_id: C.clientId, response_type: 'code', redirect_uri: REDIRECT, scope: SCOPES, show_dialog: 'true', code_challenge_method: 'S256', code_challenge: challenge });
+  location.href = 'https://accounts.spotify.com/authorize?' + p;
+}
+async function tokenRequest(params) {
+  const r = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ client_id: C.clientId, ...params }),
+  });
+  if (!r.ok) throw new Error('token: ' + r.status + ' ' + (await r.text()).slice(0, 200));
+  const t = await r.json();
+  token = { scope: t.scope, access: t.access_token, refresh: t.refresh_token || (token && token.refresh), exp: Date.now() + (t.expires_in - 60) * 1000 };
+  ls.set('sp_token', token);
+}
+async function handleRedirect() {
+  const code = new URLSearchParams(location.search).get('code');
+  if (!code) return;
+  await tokenRequest({ grant_type: 'authorization_code', code, redirect_uri: REDIRECT, code_verifier: ls.get('pkce_verifier') });
+  history.replaceState(null, '', REDIRECT);
+}
+function logout() { token = null; ls.set('sp_token', null); }
+
+// ---- Spotify API. Safety net #1: no non-GET request may ever name a protected playlist.
+async function api(method, path, body) {
+  if (method !== 'GET') for (const id of PROTECTED) if (path.includes(id)) throw new Error('BLOCKED: write to protected playlist ' + id);
+  if (!token) throw new Error('No has iniciado sesión.');
+  if (Date.now() > token.exp) await tokenRequest({ grant_type: 'refresh_token', refresh_token: token.refresh });
+  const url = path.startsWith('http') ? path : 'https://api.spotify.com/v1' + path;
+  const r = await fetch(url, { method, headers: { Authorization: 'Bearer ' + token.access, 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
+  if (r.status === 401) { logout(); throw new Error('Sesión expirada, vuelve a iniciar sesión.'); }
+  if (!r.ok) throw new Error(method + ' ' + path.replace('https://api.spotify.com/v1', '') + ' -> ' + r.status + ' ' + (await r.text()).slice(0, 160)
+    + (r.status === 403 ? ' | usuario: ' + (me ? me.id : '?') + ' | scopes: ' + (token.scope || '(desconocidos, cierra sesión y vuelve a entrar)') : ''));
+  const text = await r.text();
+  return text ? JSON.parse(text) : null;   // some writes answer 200 with an empty body
+}
+// Safety net #2: every playlist write goes through here, and only Final / Descartes pass.
+function writePlaylist(id, method, uris) {
+  if (!WRITABLE.has(id) || PROTECTED.has(id)) throw new Error('BLOCKED: ' + id + ' is not a writable playlist');
+  const body = method === 'DELETE' ? { items: uris.map(uri => ({ uri })) } : uris;
+  return api(method, '/playlists/' + id + '/items', body);
+}
+// There is deliberately no "clear playlist" or "replace items" function in this page.
+
+// ---- state
+let songs = [], decision = new Map(), devices = [], deviceId = ls.get('device'), genre = ls.get('genre') || '';
+let stateFilter = ls.get('state') || '', sortBy = ls.get('sort') || 'genre';
+let quotas = Object.assign({}, C.quotas || {}), editing = false;
+let current = null, playing = null, busy = false, statusMsg = '', me = null;
+
+async function readPlaylist(id) {
+  const ids = new Set(); let url = '/playlists/' + id + '/items?limit=100';
+  while (url) {
+    const r = await api('GET', url);
+    for (const e of r.items) { const t = e.track || e.item; if (t && t.id) ids.add(t.id); }
+    url = r.next;
+  }
+  return ids;
+}
+async function loadDecisions() {
+  const [f, d] = await Promise.all([readPlaylist(FINAL), readPlaylist(DESC)]);
+  decision = new Map();
+  for (const id of d) decision.set(id, 'out');
+  for (const id of f) decision.set(id, 'in');
+}
+async function loadDevices() {
+  devices = (await api('GET', '/me/player/devices')).devices;
+  if (!devices.find(d => d.id === deviceId)) deviceId = ((devices.find(d => d.is_active) || devices[0]) || {}).id || null;
+  ls.set('device', deviceId);
+}
+const count = (g, pred) => songs.filter(s => s.genre === g && pred(decision.get(s.id))).length;
+const quota = g => Math.max(0, Math.round(+quotas[g] || 0));
+const totalQuota = () => genres().reduce((t, g) => t + quota(g), 0);
+// Quotas live in the Final playlist's description (JSON) so every device sees the same numbers.
+const unescapeHtml = t => { const o = document.createElement('textarea'); o.innerHTML = t; return o.value; };
+async function loadQuotas() {
+  const r = await api('GET', '/playlists/' + FINAL + '?fields=description');
+  const d = unescapeHtml(r.description || '').trim();
+  if (d.startsWith('{')) try { Object.assign(quotas, JSON.parse(d)); } catch (e) {}
+}
+function saveQuotas() {
+  if (!WRITABLE.has(FINAL) || PROTECTED.has(FINAL)) throw new Error('BLOCKED: ' + FINAL + ' is not a writable playlist');
+  return api('PUT', '/playlists/' + FINAL, { description: JSON.stringify(quotas) });
+}
+const genres = () => [...new Set(songs.map(s => s.genre))].sort((a, b) => quota(b) - quota(a) || a.localeCompare(b));
+const by = f => (a, b) => f(a).localeCompare(f(b)) || a.name.localeCompare(b.name);
+const SORTS = { genre: by(s => s.genre), name: by(s => s.name), artist: by(s => s.artist), year: (a, b) => (a.year || 0) - (b.year || 0) || a.name.localeCompare(b.name) };
+const SORT_LABELS = { genre: 'Género', name: 'Nombre', artist: 'Artista', year: 'Año', original: 'Orden original' };
+const STATES = { '': 'Todas', none: 'Sin decidir', in: 'In', out: 'Out' };
+// genre filter + sort = the play order; the state filter only narrows what the list shows
+function ordered() { const arr = songs.filter(s => !genre || s.genre === genre); return SORTS[sortBy] ? [...arr].sort(SORTS[sortBy]) : arr; }
+function visible() { return ordered().filter(s => !stateFilter || (stateFilter === 'none' ? !decision.has(s.id) : decision.get(s.id) === stateFilter)); }
+
+// ---- player (Spotify Connect: the phone's Spotify app does the playing)
+async function play(song) {
+  current = song; render();
+  const q = deviceId ? '?device_id=' + deviceId : '';
+  try { await api('PUT', '/me/player/play' + q, { uris: ['spotify:track:' + song.id] }); }
+  catch (e) { if (/404/.test(e.message)) throw new Error('Sin dispositivo activo: abre Spotify en el teléfono, reproduce algo y pulsa ⟳.'); throw e; }
+}
+function nextUndecided() {
+  const o = ordered(), start = current ? o.indexOf(current) + 1 : 0;
+  for (let k = 0; k < o.length; k++) { const s = o[(start + k) % o.length]; if (!decision.has(s.id)) return s; }
+  return null;
+}
+async function playNext() {
+  const n = nextUndecided();
+  if (!n) { current = null; statusMsg = genre ? 'No quedan canciones sin decidir en ' + genre + '.' : 'No quedan canciones sin decidir.'; return; }
+  await play(n);
+}
+async function poll() {
+  if (!token || busy) return;
+  try {
+    playing = await api('GET', '/me/player/currently-playing');
+    const heard = playing && playing.item && songs.find(s => s.id === playing.item.id);
+    if (heard && heard !== current) current = heard;   // follow what the car is actually hearing
+    render();
+  } catch (e) {}
+}
+
+// ---- decisions = playlist membership (remove from the old one, add to the new one)
+async function decide(song, d) {
+  const prev = decision.get(song.id) || null;
+  if (prev === d) d = null;                             // tapping the current state clears it
+  const uri = 'spotify:track:' + song.id;
+  if (prev) await writePlaylist(prev === 'in' ? FINAL : DESC, 'DELETE', [uri]);
+  if (d) await writePlaylist(d === 'in' ? FINAL : DESC, 'POST', [uri]);
+  if (d) decision.set(song.id, d); else decision.delete(song.id);
+  return d;
+}
+
+async function run(fn) {
+  if (busy) return; busy = true; statusMsg = ''; render();
+  try { await fn(); } catch (e) { statusMsg = e.message; }
+  busy = false; render();
+}
+
+// ---- render
+const label = d => d === 'in' ? '✔ In' : d === 'out' ? '✘ Out' : '—';
+function render() {
+  const err = configError();
+  if (err) { app.innerHTML = '<p class="fatal">' + esc(err) + '</p>'; return; }
+  if (!token) { app.innerHTML = '<h1>Final playlist</h1><p>' + esc(statusMsg) + '</p><button class="big" data-a="login">Iniciar sesión con Spotify</button>'; return; }
+
+  const chosen = songs.filter(s => decision.get(s.id) === 'in').length;
+  const meters = genres().map(g => {
+    const n = count(g, d => d === 'in'), q = quota(g), u = count(g, d => !d);
+    const w = q ? Math.min(100, n / q * 100) : (n ? 100 : 0);
+    return '<div class="meter ' + (n > q ? 'over' : '') + ' ' + (genre === g ? 'sel' : '') + '" data-a="genre" data-g="' + esc(g) + '">' +
+      '<span>' + esc(g) + '</span><div class="bar"><i style="width:' + w + '%"></i></div>' +
+      (editing ? '<span><input type="number" min="0" inputmode="numeric" data-a="q" data-g="' + esc(g) + '" value="' + q + '" style="width:4em"></span>'
+               : '<span>' + n + '/' + q + ' <small>· ' + u + '</small></span>') + '</div>';
+  }).join('');
+  const dev = '<select data-a="device">' + (devices.length ? '' : '<option value="">(sin dispositivos)</option>') +
+    devices.map(d => '<option value="' + esc(d.id) + '"' + (d.id === deviceId ? ' selected' : '') + '>' + esc(d.name) + '</option>').join('') +
+    '</select><button data-a="devices" title="Actualizar dispositivos">⟳</button>';
+  const dis = busy ? ' disabled' : '';
+  const now = current
+    ? '<h2>' + esc(current.name) + '</h2>' +
+      '<div>' + esc(current.artist) + ' · ' + esc(current.genre) + (current.year ? ' · ' + current.year : '') + ' · <b>' + label(decision.get(current.id)) + '</b></div>' +
+      '<div class="row" style="margin-top:10px">' +
+        '<button class="big in" data-a="in"' + dis + '>✔ In</button>' +
+        '<button class="big out" data-a="out"' + dis + '>✘ Out</button>' +
+        '<button class="big" data-a="skip"' + dis + '>Skip ›</button></div>' +
+      '<div class="row" style="margin-top:6px"><button data-a="toggle"' + dis + '>' + (playing && playing.is_playing ? '⏸' : '▶') + '</button>' +
+        '<small>' + (playing && playing.item ? 'Sonando: ' + esc(playing.item.name) : 'Nada sonando') + '</small></div>'
+    : '<button class="big" data-a="start"' + dis + '>▶ Reproducir siguiente sin decidir' + (genre ? ' (' + esc(genre) + ')' : '') + '</button>';
+  const filters = '<div class="row" style="margin:8px 0">' +
+    Object.entries(STATES).map(([k, v]) => '<button data-a="state" data-s="' + k + '"' + (stateFilter === k ? ' class="sel"' : '') + '>' + v + '</button>').join('') +
+    '<select data-a="sort">' + Object.entries(SORT_LABELS).map(([k, v]) => '<option value="' + k + '"' + (sortBy === k ? ' selected' : '') + '>' + v + '</option>').join('') + '</select></div>';
+  let lastGenre = null;
+  const list = visible().map(s =>
+    (sortBy === 'genre' && !genre && s.genre !== lastGenre ? '<h3 class="gh">' + esc(lastGenre = s.genre) + '</h3>' : '') +
+    '<div class="song' + (s === current ? ' cur' : '') + '">' +
+      '<div><b>' + esc(s.name) + '</b><br><small>' + esc(s.artist) + ' · ' + esc(s.genre) + (s.year ? ' · ' + s.year : '') + '</small></div>' +
+      '<div class="row"><button data-a="play" data-id="' + s.id + '"' + dis + '>▶</button>' +
+      '<button class="st ' + (decision.get(s.id) || '') + '" data-a="cycle" data-id="' + s.id + '"' + dis + '>' + label(decision.get(s.id)) + '</button></div>' +
+    '</div>').join('');
+
+  app.innerHTML =
+    '<div class="row"><h1>Final ' + chosen + '/' + totalQuota() + '</h1>' + dev +
+      '<button data-a="reload" title="Releer playlists"' + dis + '>↻</button><button data-a="logout">Salir' + (me ? ' (' + esc(me.id) + ')' : '') + '</button></div>' +
+    '<p id="status">' + esc(statusMsg) + (busy ? ' …' : '') + '</p>' +
+    '<div>' + meters + '</div><div class="row"><button data-a="' + (editing ? 'saveq' : 'editq') + '"' + dis + '>' + (editing ? 'Guardar cupos' : 'Cupos') + '</button>' +
+      (editing ? '<button data-a="cancelq">Cancelar</button>' : '') + '</div><div id="now">' + now + '</div>' + filters + '<div>' + list + '</div>';
+}
+
+app.addEventListener('change', e => {
+  if (e.target.dataset.a === 'device') { deviceId = e.target.value; ls.set('device', deviceId); }
+  if (e.target.dataset.a === 'sort') { sortBy = e.target.value; ls.set('sort', sortBy); render(); }
+  if (e.target.dataset.a === 'q') quotas[e.target.dataset.g] = +e.target.value || 0;
+});
+app.addEventListener('click', e => {
+  const b = e.target.closest('[data-a]'); if (!b || b.dataset.a === 'q') return;
+  const a = b.dataset.a, byId = () => songs.find(s => s.id === b.dataset.id);
+  const actions = {
+    login, logout: () => { logout(); render(); },
+    genre: () => { genre = genre === b.dataset.g ? '' : b.dataset.g; ls.set('genre', genre); render(); },
+    state: () => { stateFilter = b.dataset.s; ls.set('state', stateFilter); render(); },
+    editq: () => { editing = true; render(); },
+    cancelq: () => run(async () => { quotas = Object.assign({}, C.quotas || {}); await loadQuotas(); editing = false; }),
+    saveq: () => run(async () => { await saveQuotas(); editing = false; }),
+    devices: () => run(loadDevices),
+    reload: () => run(loadDecisions),
+    start: () => run(playNext),
+    skip: () => run(playNext),
+    play: () => run(() => play(byId())),
+    toggle: () => run(() => api('PUT', playing && playing.is_playing ? '/me/player/pause' : '/me/player/play')),
+    in: () => run(async () => { if (await decide(current, 'in')) await playNext(); }),
+    out: () => run(async () => { if (await decide(current, 'out')) await playNext(); }),
+    cycle: () => run(async () => { const s = byId(), d = decision.get(s.id); await decide(s, !d ? 'in' : d === 'in' ? 'out' : null); }),
+  };
+  if (actions[a]) actions[a]();
+});
+
+(async () => {
+  songs = await (await fetch('songs.json')).json();
+  render();
+  if (configError()) return;
+  try { await handleRedirect(); } catch (e) { statusMsg = e.message; }
+  if (token) { await run(() => Promise.all([loadDecisions(), loadDevices(), api('GET', '/me').then(u => { me = u; }), loadQuotas()])); setInterval(poll, 5000); }
+  render();
+})();
+</script>
+</body>
+</html>

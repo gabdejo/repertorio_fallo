@@ -14,6 +14,7 @@ Run:  python -m src.playlist_creation [playlist_id_or_url]
 from __future__ import annotations
 
 import os
+import re
 
 import pandas as pd
 from dotenv import load_dotenv
@@ -21,18 +22,42 @@ from dotenv import load_dotenv
 from . import config, spotify_api
 
 
+def _pid(s: str | None) -> str:
+    """Bare 22-char playlist id from an id or a full open.spotify.com URL."""
+    return (re.search(r"[A-Za-z0-9]{22}", s or "") or [""])[0]
+
+
+def guard(playlist_id: str) -> None:
+    """Refuse any write to the hand-curated screen playlist (SCREEN_PLAYLIST_ID),
+    which is read-only for this project. Every playlist write in src/ routes
+    through add_in_batches / remove_in_batches / clear, so this is the one gate.
+    Deliberate override only: ALLOW_PROTECTED_PLAYLIST_WRITES=1 in the environment."""
+    load_dotenv()
+    if os.getenv("ALLOW_PROTECTED_PLAYLIST_WRITES") == "1":
+        return
+    protected = _pid(os.getenv("SCREEN_PLAYLIST_ID"))
+    if protected and _pid(playlist_id) == protected:
+        raise PermissionError(
+            f"Playlist {playlist_id} is the protected screen playlist (read-only). "
+            "Pass a different playlist, or set ALLOW_PROTECTED_PLAYLIST_WRITES=1 on purpose."
+        )
+
+
 def add_in_batches(sp, playlist_id: str, track_ids: list[str], size: int = 100) -> None:
+    guard(playlist_id)
     for i in range(0, len(track_ids), size):
         sp.playlist_add_items(playlist_id, track_ids[i : i + size])
 
 
 def remove_in_batches(sp, playlist_id: str, track_ids: list[str], size: int = 100) -> None:
+    guard(playlist_id)
     for i in range(0, len(track_ids), size):
         sp.playlist_remove_all_occurrences_of_items(playlist_id, track_ids[i : i + size])
 
 
 def clear(sp, playlist_id: str) -> None:
     """Empty a playlist (replace its contents with nothing) - one call, no batching needed."""
+    guard(playlist_id)
     sp.playlist_replace_items(playlist_id, [])
 
 

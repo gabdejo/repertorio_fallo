@@ -1,7 +1,7 @@
 pymupdf
 pandas
 rapidfuzz
-spotipy
+spotipy>=2.26.0  # 2.26 uses the /playlists/{id}/items endpoints; older versions get 403 on playlist writes
 python-dotenv
 matplotlib
 seaborn

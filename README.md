@@ -111,3 +111,23 @@ fixes to `artist_aliases.json`, and re-run. Cleaning is idempotent.
 Run `python -m src.lastfm_api` to fetch top tags per unique artist into
 `data/cache/lastfm_tag_cache.json`, supplementing `genre_hint`/`genre_overrides.json` for genre
 coverage (see PLAN.md's Stage 3.5 section for the design).
+
+## Picker page (`web/`) — choose the final playlist from your phone
+
+A static page that plays each undecided song on your phone's Spotify app (Spotify Connect,
+Premium required) and records In / Out per song, with a quota meter per genre. Decisions are
+stored as membership in two playlists you create by hand: **Final** and **Descartes**.
+
+1. Create two empty playlists in Spotify and paste their ids/URLs into `web/config.js`
+   (`finalPlaylistId`, `descartesPlaylistId`). Default per-genre maximums live there too (`quotas`); edit them live in the page with the "Cupos" button (saved in the Final playlist description).
+2. In the Spotify dashboard add the page URL as a Redirect URI, e.g.
+   `https://<your-app>.vercel.app/` and, for local testing, `http://127.0.0.1:8888/`.
+3. Regenerate the song list whenever the screen playlist changes:
+   `python -m src.preferences report --out data/processed/screen_playlist.csv && python -m src.web_build`
+4. Deploy the `web/` folder on Vercel (root directory = `web`, no build step), or test locally:
+   `python -m http.server 8888 -d web -b 127.0.0.1`.
+
+Safety: the screen playlist id is listed in `protectedPlaylistIds` and the page never sends a
+write naming it. On the Python side `playlist_creation.guard()` blocks every write to
+`SCREEN_PLAYLIST_ID` (override deliberately with `ALLOW_PROTECTED_PLAYLIST_WRITES=1`).
+`web/songs.json` doubles as a committed snapshot of the screen playlist's track ids.
