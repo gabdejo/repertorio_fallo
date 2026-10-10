@@ -162,6 +162,13 @@ def report(playlist_id: str | None = None, out_csv=None) -> tuple[pd.DataFrame, 
     if recovered:
         df = df.drop(columns=[c for c in final.columns if c != "line_no"]).merge(final, on="line_no", how="left")
 
+    # The repertoire has duplicate lines (misspelled artist variants, e.g.
+    # "Michell Telo" vs "Michel Teló") that both match the same Spotify
+    # track_id, so the merge above fans one screen-playlist track out into
+    # several rows. Keep one row per track_id - prefer whichever duplicate
+    # actually resolved a genre, so a real one isn't discarded for a blank.
+    df = df.sort_values("genre", na_position="last").drop_duplicates(subset="track_id", keep="first")
+
     df["liked"] = True
 
     unmatched = df[df["line_no"].isna()][["name", "artist"]].copy()

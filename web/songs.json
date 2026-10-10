@@ -1,52 +1,52 @@
 [
  {
-  "id": "50mROPNHQ6xkNnHcXlNhOZ",
-  "name": "Besala Ya",
-  "artist": "Bacilos",
-  "genre": "Latin Pop",
-  "year": 2001
+  "id": "0WFejfwf2BUGlkwjZ5kPgv",
+  "name": "OJITOS ROJOS",
+  "artist": "Grupo Frontera, Ke Personajes",
+  "genre": "Banda",
+  "year": 2023
  },
  {
-  "id": "1V6K77D0lrPAMQjLuRXWsX",
-  "name": "Besitos de Colores",
-  "artist": "Rocko y Blasty",
-  "genre": "Latin Pop",
+  "id": "7j5mHxw91If9zRVPB1KNnH",
+  "name": "Eres Mi Bien",
+  "artist": "Grupo 5",
+  "genre": "Cumbia",
+  "year": 2007
+ },
+ {
+  "id": "2yjHvbMtfyoXXJYpsR3rYP",
+  "name": "Motor Y Motivo",
+  "artist": "Grupo 5",
+  "genre": "Cumbia",
+  "year": 2005
+ },
+ {
+  "id": "7FxnHDy0ew0aDygCSo6vYH",
+  "name": "Quiero Amanecer",
+  "artist": "Bareto",
+  "genre": "Cumbia",
   "year": 2016
  },
  {
-  "id": "0Tl84qfow6Dv0PM60zoBhb",
-  "name": "La Bomba",
-  "artist": "Azul Azul",
-  "genre": "Latin Pop",
-  "year": 2000
+  "id": "2xjcDF21U2ccgE2LEeiMbf",
+  "name": "Loquita",
+  "artist": "Marama",
+  "genre": "Cumbia",
+  "year": 2015
  },
  {
-  "id": "5flsxti4z1h20X9hW6Ee7c",
-  "name": "Bonita de Más",
-  "artist": "Erreway",
-  "genre": "Pop",
-  "year": 2002
+  "id": "4vhkI8x68EaGQR3Kn7Pwhc",
+  "name": "Esta Noche",
+  "artist": "Mike Bahía, Greeicy",
+  "genre": "Cumbia",
+  "year": 2019
  },
  {
-  "id": "0mxWiFg0m9TUXgWAWDRqgN",
-  "name": "Bonita Si E´",
-  "artist": "Donny Caballero, Chelito De Castro",
-  "genre": "Latin Pop",
-  "year": 2014
- },
- {
-  "id": "2XRqhe4lmCQVaUWawR5wRo",
-  "name": "Rica y Apretadita (feat. Anayka)",
-  "artist": "El General, Anayka",
-  "genre": "Rock",
-  "year": 1991
- },
- {
-  "id": "2XRqhe4lmCQVaUWawR5wRo",
-  "name": "Rica y Apretadita (feat. Anayka)",
-  "artist": "El General, Anayka",
-  "genre": "Rock",
-  "year": 1991
+  "id": "6K1frT710sxppNeH3iJvqP",
+  "name": "Apostemos Que Me Caso",
+  "artist": "Grupo 5",
+  "genre": "Cumbia",
+  "year": 2020
  },
  {
   "id": "4smbzhaRt7EYwO73SmFXyR",
@@ -56,25 +56,11 @@
   "year": 2015
  },
  {
-  "id": "0k1hbeZodoEw34FAdbh8xM",
-  "name": "Brujeria",
-  "artist": "El Gran Combo De Puerto Rico",
-  "genre": "Salsa",
-  "year": 1979
- },
- {
-  "id": "6mmcsCrrASekHEUfjuNFOO",
-  "name": "Visa Para un Sueño",
-  "artist": "Juan Luis Guerra 4.40",
-  "genre": "Merengue",
-  "year": 1989
- },
- {
-  "id": "7DhYjNLksXZhbRQeheAums",
-  "name": "Caraluna",
-  "artist": "Bacilos",
-  "genre": "Latin Pop",
-  "year": 2002
+  "id": "1Qp05hdxRMOMxd0sYRQ0n5",
+  "name": "Mix el Pícaro - (En Vivo)",
+  "artist": "Grupo 5, Mauricio Mesones",
+  "genre": "Cumbia",
+  "year": 2023
  },
  {
   "id": "2jQj5bsJeOad1YoaPWjJHm",
@@ -84,6 +70,167 @@
   "year": 2017
  },
  {
+  "id": "3SQRqRJ4xl2FZ8B5eswvvU",
+  "name": "El Ritmo de Mi Corazón",
+  "artist": "Grupo 5",
+  "genre": "Cumbia",
+  "year": 2020
+ },
+ {
+  "id": "19CmuECYssqkPWANF4nLWM",
+  "name": "Para No Verte Más",
+  "artist": "La Mosca",
+  "genre": "Electronic",
+  "year": 2000
+ },
+ {
+  "id": "6Y5k0NupErwLzOQXDxfVFa",
+  "name": "Te Quiero Comer La Boca",
+  "artist": "La Mosca",
+  "genre": "Electronic",
+  "year": 2001
+ },
+ {
+  "id": "5IypFJnPEwFAPDTRz14ijX",
+  "name": "Como Tu No Hay Dos",
+  "artist": "Buxxi",
+  "genre": "House",
+  "year": 2011
+ },
+ {
+  "id": "2L2zLsybbySytu4RI5z3aK",
+  "name": "Ella Es Mi Fiesta",
+  "artist": "Carlos Vives",
+  "genre": "Latin Pop",
+  "year": 2014
+ },
+ {
+  "id": "2eM20Ku7jc2DVpV1EHNpra",
+  "name": "Probablemente",
+  "artist": "Daniela Darcourt",
+  "genre": "Latin Pop",
+  "year": 2018
+ },
+ {
+  "id": "3NBDdGYowVMlQiG91y7xLm",
+  "name": "Qué Quieres De Mi",
+  "artist": "WATAKA",
+  "genre": "Latin Pop",
+  "year": 2020
+ },
+ {
+  "id": "1XmJsXTKeaw51buHrbaqDM",
+  "name": "Enamorarte Mil Veces",
+  "artist": "Fonseca, Manuel Medrano",
+  "genre": "Latin Pop",
+  "year": 2026
+ },
+ {
+  "id": "50mROPNHQ6xkNnHcXlNhOZ",
+  "name": "Besala Ya",
+  "artist": "Bacilos",
+  "genre": "Latin Pop",
+  "year": 2001
+ },
+ {
+  "id": "31sQYFl5RJ3Jd6yBySVwA5",
+  "name": "Esa Muchachita",
+  "artist": "Mauricio & PalodeAgua",
+  "genre": "Latin Pop",
+  "year": 2009
+ },
+ {
+  "id": "7uebcjB4PNrMzTUdxCefno",
+  "name": "Señor Mentira",
+  "artist": "Daniela Darcourt",
+  "genre": "Latin Pop",
+  "year": 2019
+ },
+ {
+  "id": "6hHxqj04s5BbpoNGz25GUm",
+  "name": "Niña",
+  "artist": "Mauricio & PalodeAgua",
+  "genre": "Latin Pop",
+  "year": 2003
+ },
+ {
+  "id": "6tb7r9qcLBuguz2nG6fpBu",
+  "name": "Na Na Na (Dulce Niña)",
+  "artist": "A.B. Quintanilla III Y Los Kumbia Kings",
+  "genre": "Latin Pop",
+  "year": 2007
+ },
+ {
+  "id": "7G0Z77RdBTdf4bt45AL6yS",
+  "name": "Hace Tiempo",
+  "artist": "Fonseca",
+  "genre": "Latin Pop",
+  "year": 2005
+ },
+ {
+  "id": "5lw3vLQEd2IJ9nHRKsF65a",
+  "name": "Me Enamore (Remix) [feat. Elvis Crespo & Tito el Bambino]",
+  "artist": "Angel Y Khriz, Elvis Crespo, Tito \"El Bambino\"",
+  "genre": "Latin Pop",
+  "year": 2015
+ },
+ {
+  "id": "0ZrGY4D4eDRKD0Cj5KndAV",
+  "name": "Conquista",
+  "artist": "Jerau",
+  "genre": "Latin Pop",
+  "year": 2006
+ },
+ {
+  "id": "0YxQ5bR8jTvOxG06vEmsq3",
+  "name": "Loco por Volverte a Ver",
+  "artist": "Chili Fernandez",
+  "genre": "Latin Pop",
+  "year": 2004
+ },
+ {
+  "id": "4mCCBwhjkMSlq5Jo0tGKZa",
+  "name": "Nocivo",
+  "artist": "KEMA",
+  "genre": "Latin Pop",
+  "year": 2006
+ },
+ {
+  "id": "6hfawWEvZfjxl3fisEakOY",
+  "name": "Sin Querer",
+  "artist": "Bacanos",
+  "genre": "Latin Pop",
+  "year": 1995
+ },
+ {
+  "id": "3YiF4GqPHrifMDhn7mUnD1",
+  "name": "Arroyito",
+  "artist": "Fonseca",
+  "genre": "Latin Pop",
+  "year": 2008
+ },
+ {
+  "id": "1TPZ028i7BWWS5xW4UN9ss",
+  "name": "La Tierra del Olvido",
+  "artist": "Carlos Vives",
+  "genre": "Latin Pop",
+  "year": 1995
+ },
+ {
+  "id": "4RcN7qGRs4OfbI8cHmqQiL",
+  "name": "Chiquilla",
+  "artist": "A.B. Quintanilla III Y Los Kumbia Kings",
+  "genre": "Latin Pop",
+  "year": 2006
+ },
+ {
+  "id": "7DhYjNLksXZhbRQeheAums",
+  "name": "Caraluna",
+  "artist": "Bacilos",
+  "genre": "Latin Pop",
+  "year": 2002
+ },
+ {
   "id": "1T2K7KWGgbUpRTeY7L2opp",
   "name": "Carmelina",
   "artist": "Merengues Dorados",
@@ -91,11 +238,739 @@
   "year": 2013
  },
  {
+  "id": "0Tl84qfow6Dv0PM60zoBhb",
+  "name": "La Bomba",
+  "artist": "Azul Azul",
+  "genre": "Latin Pop",
+  "year": 2000
+ },
+ {
+  "id": "1V6K77D0lrPAMQjLuRXWsX",
+  "name": "Besitos de Colores",
+  "artist": "Rocko y Blasty",
+  "genre": "Latin Pop",
+  "year": 2016
+ },
+ {
+  "id": "0FbZzSZ48zfYrXFhJMJZ6Y",
+  "name": "Con Mi Amiga",
+  "artist": "Daniela Darcourt",
+  "genre": "Latin Pop",
+  "year": 2019
+ },
+ {
+  "id": "4K3uhrdf6fwyGdQUhX2ujF",
+  "name": "Corazón Abierto",
+  "artist": "Victor Muñoz",
+  "genre": "Latin Pop",
+  "year": 2011
+ },
+ {
+  "id": "0mxWiFg0m9TUXgWAWDRqgN",
+  "name": "Bonita Si E´",
+  "artist": "Donny Caballero, Chelito De Castro",
+  "genre": "Latin Pop",
+  "year": 2014
+ },
+ {
+  "id": "59hfezbTqi7I68O4OyLfcR",
+  "name": "Cuando Nos Volvamos a Encontrar (feat. Marc Anthony)",
+  "artist": "Carlos Vives, Marc Anthony",
+  "genre": "Latin Pop",
+  "year": 2014
+ },
+ {
+  "id": "2kP6fOqdSQ5CYqVH5z5844",
+  "name": "Te Encontre",
+  "artist": "El Vega",
+  "genre": "Latin Pop",
+  "year": 2017
+ },
+ {
+  "id": "2WveHlo9BiLG3ppkjpd3Mc",
+  "name": "Te Doy Mi Vida",
+  "artist": "Lucas Arnau",
+  "genre": "Latin Pop",
+  "year": 2004
+ },
+ {
+  "id": "1mVyqlOFiomPM0Ovojg84Y",
+  "name": "Mi declaración",
+  "artist": "Bigal & L Jake",
+  "genre": "Latin Pop",
+  "year": 2013
+ },
+ {
+  "id": "5cgwBlY1oNdnuNsy4PaXAz",
+  "name": "Te Doy Mi Amor",
+  "artist": "Bacanos",
+  "genre": "Latin Pop",
+  "year": 2005
+ },
+ {
+  "id": "2gVR7azkV54VtNQXfWvRtP",
+  "name": "Soltera.com",
+  "artist": "Son Tentación",
+  "genre": "Latin Pop",
+  "year": 2014
+ },
+ {
+  "id": "6MiBFlpDlzr34vCXcyyxZP",
+  "name": "Dime",
+  "artist": "Gusi & Beto, Gusi",
+  "genre": "Latin Pop",
+  "year": 2009
+ },
+ {
+  "id": "2in1gSZtv2lRbcZUmN9aAl",
+  "name": "Te Mando Flores",
+  "artist": "Fonseca",
+  "genre": "Latin Pop",
+  "year": 2005
+ },
+ {
+  "id": "609SDGj0txmlAXRrpwee9Y",
+  "name": "Llegaste Tú",
+  "artist": "Luis Fonsi, Juan Luis Guerra 4.40",
+  "genre": "Merengue",
+  "year": 2026
+ },
+ {
+  "id": "0K1XXuhaJBPWMcgjj3ug3u",
+  "name": "Las Avispas",
+  "artist": "Juan Luis Guerra 4.40",
+  "genre": "Merengue",
+  "year": 2004
+ },
+ {
+  "id": "2GYKIXFx2kYag8qpR7K3Ka",
+  "name": "Como Hago",
+  "artist": "Eddy Herrera",
+  "genre": "Merengue",
+  "year": 2005
+ },
+ {
+  "id": "47nD9EtDtUORYiLPDY4DeI",
+  "name": "La Travesia",
+  "artist": "Juan Luis Guerra 4.40",
+  "genre": "Merengue",
+  "year": 2007
+ },
+ {
+  "id": "1jD48pmiHMSVHHPzKLi4P3",
+  "name": "Tu Eres Ajena",
+  "artist": "Eddy Herrera",
+  "genre": "Merengue",
+  "year": 2001
+ },
+ {
+  "id": "4DMer3JyTYezEzo9tatZOb",
+  "name": "Si Me Dejas No Vale",
+  "artist": "La Linea",
+  "genre": "Merengue",
+  "year": 2008
+ },
+ {
+  "id": "5fF0fb0VFihGDHFshDLi2Z",
+  "name": "Mi Bendición",
+  "artist": "Juan Luis Guerra 4.40",
+  "genre": "Merengue",
+  "year": 2010
+ },
+ {
+  "id": "5fq4jxlqyjAVFLOB0lZIdT",
+  "name": "25 Horas",
+  "artist": "Proyecto Uno",
+  "genre": "Merengue",
+  "year": 2014
+ },
+ {
+  "id": "6r4EpLVNrajnIXmY9BgtgC",
+  "name": "Noches de Fantasía",
+  "artist": "Joseph Fonseca",
+  "genre": "Merengue",
+  "year": 2000
+ },
+ {
+  "id": "6YYmoV9YbBefsspGmqFHbs",
+  "name": "Una Vaina Loca",
+  "artist": "Fuego",
+  "genre": "Merengue",
+  "year": 2011
+ },
+ {
+  "id": "0FcgB8l69nXBOmvhvEXm8o",
+  "name": "Pegame Tu Vicio",
+  "artist": "Eddy Herrera",
+  "genre": "Merengue",
+  "year": 2001
+ },
+ {
+  "id": "7JIjUx3GsL0upxmNJacmtz",
+  "name": "Suavemente",
+  "artist": "Elvis Crespo",
+  "genre": "Merengue",
+  "year": 1998
+ },
+ {
+  "id": "7jizO2haWuR6oc0i9tprIb",
+  "name": "Me Enamoro de Ella",
+  "artist": "Juan Luis Guerra 4.40",
+  "genre": "Merengue",
+  "year": 1986
+ },
+ {
+  "id": "7uC9TpGGHrAssX8NUKBqed",
+  "name": "Vale la Pena",
+  "artist": "Juan Luis Guerra 4.40",
+  "genre": "Merengue",
+  "year": 1998
+ },
+ {
+  "id": "5q9VC2VFj8Pak4E2jQnp7I",
+  "name": "A Pedir Su Mano",
+  "artist": "Juan Luis Guerra 4.40",
+  "genre": "Merengue",
+  "year": 1990
+ },
+ {
+  "id": "6M8horg7h52MPTxY0I3dQJ",
+  "name": "La Bilirrubina",
+  "artist": "Juan Luis Guerra 4.40",
+  "genre": "Merengue",
+  "year": 1990
+ },
+ {
+  "id": "7pV8mSDgSPbSMFw9ZP1XXR",
+  "name": "El Niágara en Bicicleta",
+  "artist": "Juan Luis Guerra 4.40",
+  "genre": "Merengue",
+  "year": 1998
+ },
+ {
+  "id": "51FvjPEGKq2zByeeEQ43V9",
+  "name": "El Merengue",
+  "artist": "Marshmello, Manuel Turizo",
+  "genre": "Merengue",
+  "year": 2023
+ },
+ {
+  "id": "4ZF74uJy2XGgVx8TUeYjZ8",
+  "name": "La Dueña del Swing",
+  "artist": "Los Hermanos Rosario",
+  "genre": "Merengue",
+  "year": 1995
+ },
+ {
+  "id": "2AR6gN4QVBdJ8iw2KSG7fQ",
+  "name": "Es Mentiroso",
+  "artist": "Olga Tañón",
+  "genre": "Merengue",
+  "year": 1994
+ },
+ {
+  "id": "1aOYcUErvYocfJgZq18o0o",
+  "name": "El Idiota",
+  "artist": "Eddy Herrera",
+  "genre": "Merengue",
+  "year": 2003
+ },
+ {
+  "id": "6mmcsCrrASekHEUfjuNFOO",
+  "name": "Visa Para un Sueño",
+  "artist": "Juan Luis Guerra 4.40",
+  "genre": "Merengue",
+  "year": 1989
+ },
+ {
+  "id": "0fPwIRj4vZHIGU9Dd2gEMo",
+  "name": "La Ventanita",
+  "artist": "Garibaldi",
+  "genre": "Pop",
+  "year": 1994
+ },
+ {
+  "id": "5flsxti4z1h20X9hW6Ee7c",
+  "name": "Bonita de Más",
+  "artist": "Erreway",
+  "genre": "Pop",
+  "year": 2002
+ },
+ {
+  "id": "78dpORbomspz2HK64V0i74",
+  "name": "Pídeme",
+  "artist": "Danni Ubeda",
+  "genre": "Pop",
+  "year": 2003
+ },
+ {
+  "id": "7y91nQBMhyeHWTn9wVvhKl",
+  "name": "Una Vida Pasada",
+  "artist": "Camilo, Carín León",
+  "genre": "Pop",
+  "year": 2024
+ },
+ {
+  "id": "5R9a4t5t5O0IsznsrKPVro",
+  "name": "Single Ladies (Put a Ring on It)",
+  "artist": "Beyoncé",
+  "genre": "Pop",
+  "year": 2008
+ },
+ {
+  "id": "1Vy7WUJubV9JEoebuJ9dfe",
+  "name": "Más Que Tu Amigo",
+  "artist": "Marco Antonio Solís",
+  "genre": "Pop",
+  "year": 2003
+ },
+ {
+  "id": "4knc1Fp3kbuq8bH2byOvLu",
+  "name": "Índigo",
+  "artist": "Camilo, Evaluna Montaner",
+  "genre": "Pop",
+  "year": 2022
+ },
+ {
+  "id": "5981zpjMYeKGoEQ6K9794L",
+  "name": "Si Tú Me Besas",
+  "artist": "Víctor Manuelle",
+  "genre": "Pop",
+  "year": 2012
+ },
+ {
+  "id": "3Y1xjjepdqMP141ipYCAqA",
+  "name": "Inglés En Miami",
+  "artist": "Rawayana, Manuel Turizo",
+  "genre": "Reggae",
+  "year": 2026
+ },
+ {
+  "id": "3l8zyeHnG8u2q7H4FQyVtS",
+  "name": "Tropicoqueta",
+  "artist": "KAROL G",
+  "genre": "Reggaetón",
+  "year": 2025
+ },
+ {
+  "id": "3WW4yUljbeMjpMpfTV6I6u",
+  "name": "Pa Que Lo Tengas Claro",
+  "artist": "Franco, Oscarcito",
+  "genre": "Reggaetón",
+  "year": 2020
+ },
+ {
+  "id": "2RpIevYYdiQJrQtaILchnG",
+  "name": "El Poeta",
+  "artist": "Chino & Nacho",
+  "genre": "Reggaetón",
+  "year": 2011
+ },
+ {
+  "id": "1ASo4at1j2HwIZLujwl7yp",
+  "name": "Rompe la Cintura",
+  "artist": "Alexis y Fido",
+  "genre": "Reggaetón",
+  "year": 2014
+ },
+ {
+  "id": "7e6PEtKY008duLXsAJ3TVQ",
+  "name": "El Amor",
+  "artist": "Tito \"El Bambino\"",
+  "genre": "Reggaetón",
+  "year": 2015
+ },
+ {
+  "id": "35hemoZQuo9lEbFSS05I9h",
+  "name": "Si Tú No Estás",
+  "artist": "Gente De Zona",
+  "genre": "Reggaetón",
+  "year": 2018
+ },
+ {
+  "id": "1dm6z1fWB0cErMszU25dy2",
+  "name": "Después de la Playa",
+  "artist": "Bad Bunny",
+  "genre": "Reggaetón",
+  "year": 2022
+ },
+ {
+  "id": "0nhbuIdjSaPEdflhu3fK2l",
+  "name": "Ella Me Levantó",
+  "artist": "Daddy Yankee",
+  "genre": "Reggaetón",
+  "year": 2024
+ },
+ {
+  "id": "0a9L9Eylbc0mwWrG2s6n0A",
+  "name": "Mueve El Toto",
+  "artist": "Lore y Roque Me Gusta, Juan Quin y Dago, Emus DJ",
+  "genre": "Reggaetón",
+  "year": 2016
+ },
+ {
+  "id": "1wuejLPmyiQtvdPbUIvrhK",
+  "name": "Tu Me Quemas",
+  "artist": "Chino, Nacho",
+  "genre": "Reggaetón",
+  "year": 2004
+ },
+ {
+  "id": "0fqrZVSenCW6vD2eFMx5pt",
+  "name": "La Despedida",
+  "artist": "Daddy Yankee",
+  "genre": "Reggaetón",
+  "year": 2010
+ },
+ {
+  "id": "0OMRAvrtLWE2TvcXorRiB9",
+  "name": "La Gozadera (feat. Marc Anthony)",
+  "artist": "Gente De Zona, Marc Anthony",
+  "genre": "Reggaetón",
+  "year": 2016
+ },
+ {
+  "id": "3pDhN3qB33AOPhQEkUCaWt",
+  "name": "Limbo",
+  "artist": "Daddy Yankee",
+  "genre": "Reggaetón",
+  "year": 2012
+ },
+ {
+  "id": "47cVjB6QKLkV8RgzGLNJOU",
+  "name": "Llamado de Emergencia",
+  "artist": "Daddy Yankee",
+  "genre": "Reggaetón",
+  "year": 2008
+ },
+ {
+  "id": "5TFD2bmFKGhoCRbX61nXY5",
+  "name": "NUEVAYoL",
+  "artist": "Bad Bunny",
+  "genre": "Reggaetón",
+  "year": 2025
+ },
+ {
+  "id": "3pYegUivr1Aw9RzrLlUmDZ",
+  "name": "Llueve El Amor",
+  "artist": "Tito \"El Bambino\"",
+  "genre": "Reggaetón",
+  "year": 2014
+ },
+ {
+  "id": "4u5xLMRN0dgKBFFN8FiNgv",
+  "name": "Niña Bonita",
+  "artist": "Chino & Nacho",
+  "genre": "Reggaetón",
+  "year": 2010
+ },
+ {
+  "id": "4nePI9JSkEf43FlKST8Imr",
+  "name": "La Triple M",
+  "artist": "Mawell",
+  "genre": "Reparto",
+  "year": 2023
+ },
+ {
+  "id": "1kCmq61nfjoMBBaqTjMCJo",
+  "name": "Toma Que Toma",
+  "artist": "JP El Chamaco",
+  "genre": "Reparto",
+  "year": 2023
+ },
+ {
+  "id": "6SgkilvKX94WfXRbhr3RCu",
+  "name": "Todos Tenemos Un Amor",
+  "artist": "La Mosca",
+  "genre": "Rock",
+  "year": 2001
+ },
+ {
+  "id": "5Q2J37xbIR60z6ifswoGKe",
+  "name": "Un Vino, Una Cerveza",
+  "artist": "Pedro Suárez-Vértiz",
+  "genre": "Rock",
+  "year": 2001
+ },
+ {
+  "id": "2XRqhe4lmCQVaUWawR5wRo",
+  "name": "Rica y Apretadita (feat. Anayka)",
+  "artist": "El General, Anayka",
+  "genre": "Rock",
+  "year": 1991
+ },
+ {
+  "id": "1EhHf3ic0JVzzcrHxq5qgS",
+  "name": "En Barranquilla Me Quedo",
+  "artist": "Joe Arroyo",
+  "genre": "Salsa",
+  "year": 2017
+ },
+ {
+  "id": "2BOcua9pjhKuVtgN40AAHX",
+  "name": "Decisiones",
+  "artist": "Rubén Blades",
+  "genre": "Salsa",
+  "year": 1987
+ },
+ {
+  "id": "0VSOVYL24a8W59IZ6nmhAb",
+  "name": "Como Mirarte",
+  "artist": "Josimar y Su Yambú",
+  "genre": "Salsa",
+  "year": 2018
+ },
+ {
+  "id": "5e2uf58IYZUxCZSeAIOK4p",
+  "name": "Tu de Que Vas",
+  "artist": "Los 4",
+  "genre": "Salsa",
+  "year": 2016
+ },
+ {
+  "id": "4SQQXTfDQQzqMYt9Ems7A1",
+  "name": "Tú Con Él",
+  "artist": "Frankie Ruiz",
+  "genre": "Salsa",
+  "year": 2008
+ },
+ {
+  "id": "7AUhck1sPy11OExQmDDx4P",
+  "name": "De Vuelta Pa' La Vuelta",
+  "artist": "Daddy Yankee, Marc Anthony",
+  "genre": "Salsa",
+  "year": 2020
+ },
+ {
+  "id": "2nb31JbJcnsWdDcyrTFMn4",
+  "name": "Confio en Ti",
+  "artist": "Paulo FG",
+  "genre": "Salsa",
+  "year": 2006
+ },
+ {
+  "id": "5HCGrYR7g9u2X9Ju83yQLm",
+  "name": "Virgen",
+  "artist": "Adolescent's Orquesta",
+  "genre": "Salsa",
+  "year": 2001
+ },
+ {
+  "id": "54uBpRpdpMx96JAk1OyHez",
+  "name": "Yo No Sé Mañana",
+  "artist": "Luis Enrique",
+  "genre": "Salsa",
+  "year": 2009
+ },
+ {
+  "id": "6GGv5bp9nsEQMYyguJfWyv",
+  "name": "Timbalero",
+  "artist": "El Gran Combo De Puerto Rico",
+  "genre": "Salsa",
+  "year": 1987
+ },
+ {
+  "id": "0k1hbeZodoEw34FAdbh8xM",
+  "name": "Brujeria",
+  "artist": "El Gran Combo De Puerto Rico",
+  "genre": "Salsa",
+  "year": 1979
+ },
+ {
   "id": "4rHczyhBZ53pLWgn6edWfB",
   "name": "Casi un Hechizo",
   "artist": "Jerry Rivera",
   "genre": "Salsa",
   "year": 1992
+ },
+ {
+  "id": "4YOz0Fl5q0cXanSCUtsW13",
+  "name": "Detalles",
+  "artist": "Oscar D'León",
+  "genre": "Salsa",
+  "year": 1997
+ },
+ {
+  "id": "31ddSBJ1NfFZAZ6HGPoWMV",
+  "name": "La Revancha",
+  "artist": "Orquesta Zaperoko de",
+  "genre": "Salsa",
+  "year": 2019
+ },
+ {
+  "id": "1aWvCVwdBylQtpPDURZGgZ",
+  "name": "El Amor Más Bonito",
+  "artist": "Tito Nieves",
+  "genre": "Salsa",
+  "year": 2006
+ },
+ {
+  "id": "0qXUTps2gnJv2SxGryo6iS",
+  "name": "La Noche",
+  "artist": "Joe Arroyo, La Verdad",
+  "genre": "Salsa",
+  "year": 1988
+ },
+ {
+  "id": "6QJ1F9DrlsRSmKDcdVS0Oy",
+  "name": "Lloraras",
+  "artist": "Oscar D'León, La Dimensión Latina",
+  "genre": "Salsa",
+  "year": 2017
+ },
+ {
+  "id": "0zSuN9aQbux9F7CMwvhNT0",
+  "name": "La Cura",
+  "artist": "Frankie Ruiz",
+  "genre": "Salsa",
+  "year": 2008
+ },
+ {
+  "id": "1atJ6pazAZaAqsHihlkFFd",
+  "name": "Mala Mujer",
+  "artist": "Orquesta Zaperoko de",
+  "genre": "Salsa",
+  "year": 2019
+ },
+ {
+  "id": "6K5UtSAXChS6Rpm2NZJnrF",
+  "name": "Juliana",
+  "artist": "DLG",
+  "genre": "Salsa",
+  "year": 2004
+ },
+ {
+  "id": "7CaLLjqFpHAYRsmc4bqAAX",
+  "name": "Me Estoy Enloqueciendo por Ti",
+  "artist": "Jerry Rivera",
+  "genre": "Salsa",
+  "year": 1992
+ },
+ {
+  "id": "5uRd1tmUAvfFGSPR5266Xp",
+  "name": "Tu Cariñito",
+  "artist": "Luisito Ayala Y La Puerto Rican Power",
+  "genre": "Salsa",
+  "year": 2000
+ },
+ {
+  "id": "3QXFOKlokWXMh2x9Q29764",
+  "name": "Frágil",
+  "artist": "Reynier Perez, Septeto Acarey, Maía",
+  "genre": "Salsa",
+  "year": 2018
+ },
+ {
+  "id": "11zelAWJfaMjdx8oYXChzD",
+  "name": "Mi Libertad",
+  "artist": "Frankie Ruiz",
+  "genre": "Salsa",
+  "year": 2008
+ },
+ {
+  "id": "702GLOtZ2I15Y5nFv4tHlc",
+  "name": "Dia Y Noche Pienso En Ti",
+  "artist": "Jerry Rivera",
+  "genre": "Salsa",
+  "year": 1993
+ },
+ {
+  "id": "5Y947i9DlZu1ylLZRhdjoH",
+  "name": "Fabricando Fantasías",
+  "artist": "Tito Nieves",
+  "genre": "Salsa",
+  "year": 2014
+ },
+ {
+  "id": "0jLNtXSoXNQ09T3zyhBPDl",
+  "name": "No Te Contaron Mal",
+  "artist": "You Salsa",
+  "genre": "Salsa",
+  "year": 2019
+ },
+ {
+  "id": "180aaia4C30EAA9DIyJb23",
+  "name": "No Te Creas Tan Importante",
+  "artist": "Josimar y Su Yambú",
+  "genre": "Salsa",
+  "year": 2017
+ },
+ {
+  "id": "4zOZQdgs7nSjMkqB7keSM5",
+  "name": "Ojos Chinos",
+  "artist": "El Gran Combo De Puerto Rico",
+  "genre": "Salsa",
+  "year": 1982
+ },
+ {
+  "id": "5OA9HCnPMG8LUPmldbh1zC",
+  "name": "Pedro Navaja",
+  "artist": "Rubén Blades",
+  "genre": "Salsa",
+  "year": 2001
+ },
+ {
+  "id": "2q9udNV9NK0BL3q9p6TLxf",
+  "name": "Procura",
+  "artist": "ChiChi Peralta, Jandy Feliz",
+  "genre": "Salsa",
+  "year": 1997
+ },
+ {
+  "id": "1fTWZqBVEaHx9qzyqmUmPN",
+  "name": "La Rueda",
+  "artist": "Frankie Ruiz",
+  "genre": "Salsa",
+  "year": 2008
+ },
+ {
+  "id": "4HUzOrwak0j6l3Z0RVTLwO",
+  "name": "Todo Mi Corazon",
+  "artist": "DLG",
+  "genre": "Salsa",
+  "year": 1996
+ },
+ {
+  "id": "10acMrTdbp1KDqdX5UVHPB",
+  "name": "Quitemonos La Ropa",
+  "artist": "NG2",
+  "genre": "Salsa",
+  "year": 2004
+ },
+ {
+  "id": "08ETpSeBiPxPMApamUqC2R",
+  "name": "Se Acabó el Amor",
+  "artist": "Adolescent's Orquesta",
+  "genre": "Salsa",
+  "year": 2004
+ },
+ {
+  "id": "3EbYsZiyMRN9spBXg0dQtd",
+  "name": "El Cuchi Cuchi",
+  "artist": "Barbaro Fines y su Mayimbe",
+  "genre": "Salsa",
+  "year": 2011
+ },
+ {
+  "id": "1uWQ4XnZmCeLoikVoUFeNr",
+  "name": "No Morira (No Matter What)",
+  "artist": "DLG",
+  "genre": "Salsa",
+  "year": 2013
+ },
+ {
+  "id": "1EhcDLVil2ZB2AWGPD141t",
+  "name": "PARTIDO EN DOS",
+  "artist": "La Única Tropical",
+  "genre": "Tropical",
+  "year": 2024
+ },
+ {
+  "id": "2cDkpGaVD0rbZkUZ6m2mMk",
+  "name": "El Murguero",
+  "artist": "Los Auténticos Decadentes",
+  "genre": "Tropical",
+  "year": 1995
  },
  {
   "id": "0fyx2JEi8DCNPinj46NjDg",
@@ -119,53 +994,11 @@
   "year": null
  },
  {
-  "id": "0VSOVYL24a8W59IZ6nmhAb",
-  "name": "Como Mirarte",
-  "artist": "Josimar y Su Yambú",
-  "genre": "Salsa",
-  "year": 2018
- },
- {
-  "id": "5IypFJnPEwFAPDTRz14ijX",
-  "name": "Como Tu No Hay Dos",
-  "artist": "Buxxi",
-  "genre": "House",
-  "year": 2011
- },
- {
   "id": "72iOihHEQp0LA0hZcjfLaA",
   "name": "He Llorado (Como Un Niño)",
   "artist": "Juan Magán, Gente De Zona",
   "genre": "Salsa",
   "year": null
- },
- {
-  "id": "0FbZzSZ48zfYrXFhJMJZ6Y",
-  "name": "Con Mi Amiga",
-  "artist": "Daniela Darcourt",
-  "genre": "Latin Pop",
-  "year": 2019
- },
- {
-  "id": "2nb31JbJcnsWdDcyrTFMn4",
-  "name": "Confio en Ti",
-  "artist": "Paulo FG",
-  "genre": "Salsa",
-  "year": 2006
- },
- {
-  "id": "4K3uhrdf6fwyGdQUhX2ujF",
-  "name": "Corazón Abierto",
-  "artist": "Victor Muñoz",
-  "genre": "Latin Pop",
-  "year": 2011
- },
- {
-  "id": "4K3uhrdf6fwyGdQUhX2ujF",
-  "name": "Corazón Abierto",
-  "artist": "Victor Muñoz",
-  "genre": "Latin Pop",
-  "year": 2011
  },
  {
   "id": "3XYNyJPruhbMGVFHS5rRaq",
@@ -180,13 +1013,6 @@
   "artist": "Los 4, Mayco D' Alma",
   "genre": "Salsa",
   "year": null
- },
- {
-  "id": "59hfezbTqi7I68O4OyLfcR",
-  "name": "Cuando Nos Volvamos a Encontrar (feat. Marc Anthony)",
-  "artist": "Carlos Vives, Marc Anthony",
-  "genre": "Latin Pop",
-  "year": 2014
  },
  {
   "id": "2VNmezqzXiSfpINbxPttmU",
@@ -217,102 +1043,11 @@
   "year": null
  },
  {
-  "id": "7AUhck1sPy11OExQmDDx4P",
-  "name": "De Vuelta Pa' La Vuelta",
-  "artist": "Daddy Yankee, Marc Anthony",
-  "genre": "Salsa",
-  "year": 2020
- },
- {
-  "id": "7AUhck1sPy11OExQmDDx4P",
-  "name": "De Vuelta Pa' La Vuelta",
-  "artist": "Daddy Yankee, Marc Anthony",
-  "genre": "Salsa",
-  "year": 2020
- },
- {
-  "id": "2BOcua9pjhKuVtgN40AAHX",
-  "name": "Decisiones",
-  "artist": "Rubén Blades",
-  "genre": "Salsa",
-  "year": 1987
- },
- {
-  "id": "1mVyqlOFiomPM0Ovojg84Y",
-  "name": "Mi declaración",
-  "artist": "Bigal & L Jake",
-  "genre": "Latin Pop",
-  "year": 2013
- },
- {
   "id": "5ildQOEKmJuWGl2vRkFdYc",
   "name": "DESPECHÁ",
   "artist": "ROSALÍA",
   "genre": "Pop",
   "year": null
- },
- {
-  "id": "1dm6z1fWB0cErMszU25dy2",
-  "name": "Después de la Playa",
-  "artist": "Bad Bunny",
-  "genre": "Reggaetón",
-  "year": 2022
- },
- {
-  "id": "4YOz0Fl5q0cXanSCUtsW13",
-  "name": "Detalles",
-  "artist": "Oscar D'León",
-  "genre": "Salsa",
-  "year": 1997
- },
- {
-  "id": "702GLOtZ2I15Y5nFv4tHlc",
-  "name": "Dia Y Noche Pienso En Ti",
-  "artist": "Jerry Rivera",
-  "genre": "Salsa",
-  "year": 1993
- },
- {
-  "id": "6MiBFlpDlzr34vCXcyyxZP",
-  "name": "Dime",
-  "artist": "Gusi & Beto, Gusi",
-  "genre": "Latin Pop",
-  "year": 2009
- },
- {
-  "id": "1aWvCVwdBylQtpPDURZGgZ",
-  "name": "El Amor Más Bonito",
-  "artist": "Tito Nieves",
-  "genre": "Salsa",
-  "year": 2006
- },
- {
-  "id": "1aWvCVwdBylQtpPDURZGgZ",
-  "name": "El Amor Más Bonito",
-  "artist": "Tito Nieves",
-  "genre": "Salsa",
-  "year": 2006
- },
- {
-  "id": "7e6PEtKY008duLXsAJ3TVQ",
-  "name": "El Amor",
-  "artist": "Tito \"El Bambino\"",
-  "genre": "Reggaetón",
-  "year": 2015
- },
- {
-  "id": "3YiF4GqPHrifMDhn7mUnD1",
-  "name": "Arroyito",
-  "artist": "Fonseca",
-  "genre": "Latin Pop",
-  "year": 2008
- },
- {
-  "id": "3EbYsZiyMRN9spBXg0dQtd",
-  "name": "El Cuchi Cuchi",
-  "artist": "Barbaro Fines y su Mayimbe",
-  "genre": "Salsa",
-  "year": 2011
  },
  {
   "id": "5IPLLSDmttXNExe3Y5tQve",
@@ -322,60 +1057,11 @@
   "year": null
  },
  {
-  "id": "1aOYcUErvYocfJgZq18o0o",
-  "name": "El Idiota",
-  "artist": "Eddy Herrera",
-  "genre": "Merengue",
-  "year": 2003
- },
- {
-  "id": "2cDkpGaVD0rbZkUZ6m2mMk",
-  "name": "El Murguero",
-  "artist": "Los Auténticos Decadentes",
-  "genre": "Tropical",
-  "year": 1995
- },
- {
-  "id": "51FvjPEGKq2zByeeEQ43V9",
-  "name": "El Merengue",
-  "artist": "Marshmello, Manuel Turizo",
-  "genre": "Merengue",
-  "year": 2023
- },
- {
-  "id": "7pV8mSDgSPbSMFw9ZP1XXR",
-  "name": "El Niágara en Bicicleta",
-  "artist": "Juan Luis Guerra 4.40",
-  "genre": "Merengue",
-  "year": 1998
- },
- {
-  "id": "1Qp05hdxRMOMxd0sYRQ0n5",
-  "name": "Mix el Pícaro - (En Vivo)",
-  "artist": "Grupo 5, Mauricio Mesones",
-  "genre": "Cumbia",
-  "year": 2023
- },
- {
-  "id": "2RpIevYYdiQJrQtaILchnG",
-  "name": "El Poeta",
-  "artist": "Chino & Nacho",
-  "genre": "Reggaetón",
-  "year": 2011
- },
- {
   "id": "5gmDLYoJ2la34LWnxxEylX",
   "name": "El Preso",
   "artist": "Fruko Y Sus Tesos, Wilson Saoko",
   "genre": "Salsa",
   "year": null
- },
- {
-  "id": "3SQRqRJ4xl2FZ8B5eswvvU",
-  "name": "El Ritmo de Mi Corazón",
-  "artist": "Grupo 5",
-  "genre": "Cumbia",
-  "year": 2020
  },
  {
   "id": "2GcjfckZexh9wRRjg9KtQG",
@@ -385,32 +1071,11 @@
   "year": null
  },
  {
-  "id": "2L2zLsybbySytu4RI5z3aK",
-  "name": "Ella Es Mi Fiesta",
-  "artist": "Carlos Vives",
-  "genre": "Latin Pop",
-  "year": 2014
- },
- {
-  "id": "0nhbuIdjSaPEdflhu3fK2l",
-  "name": "Ella Me Levantó",
-  "artist": "Daddy Yankee",
-  "genre": "Reggaetón",
-  "year": 2024
- },
- {
   "id": "1dgErvUNtR2UUcsY3Ecf0T",
   "name": "En Barranquilla Me Quedo",
   "artist": "Joe Arroyo, La Verdad",
   "genre": "Salsa",
   "year": null
- },
- {
-  "id": "1XmJsXTKeaw51buHrbaqDM",
-  "name": "Enamorarte Mil Veces",
-  "artist": "Fonseca, Manuel Medrano",
-  "genre": "Latin Pop",
-  "year": 2026
  },
  {
   "id": "0FFWoudXuNhwroIMJgmQrN",
@@ -420,32 +1085,11 @@
   "year": null
  },
  {
-  "id": "7j5mHxw91If9zRVPB1KNnH",
-  "name": "Eres Mi Bien",
-  "artist": "Grupo 5",
-  "genre": "Cumbia",
-  "year": 2007
- },
- {
   "id": "2gX34gCWPnUSvEhYLYEMH4",
   "name": "Un beso",
   "artist": "Los 4",
   "genre": "Salsa",
   "year": null
- },
- {
-  "id": "2AR6gN4QVBdJ8iw2KSG7fQ",
-  "name": "Es Mentiroso",
-  "artist": "Olga Tañón",
-  "genre": "Merengue",
-  "year": 1994
- },
- {
-  "id": "31sQYFl5RJ3Jd6yBySVwA5",
-  "name": "Esa Muchachita",
-  "artist": "Mauricio & PalodeAgua",
-  "genre": "Latin Pop",
-  "year": 2009
  },
  {
   "id": "0j91VTv3PrBm4qtHSnzjqw",
@@ -455,53 +1099,11 @@
   "year": null
  },
  {
-  "id": "4vhkI8x68EaGQR3Kn7Pwhc",
-  "name": "Esta Noche",
-  "artist": "Mike Bahía, Greeicy",
-  "genre": "Pop",
-  "year": 2019
- },
- {
-  "id": "4vhkI8x68EaGQR3Kn7Pwhc",
-  "name": "Esta Noche",
-  "artist": "Mike Bahía, Greeicy",
-  "genre": "Cumbia",
-  "year": 2019
- },
- {
-  "id": "5Y947i9DlZu1ylLZRhdjoH",
-  "name": "Fabricando Fantasías",
-  "artist": "Tito Nieves",
-  "genre": "Salsa",
-  "year": 2014
- },
- {
-  "id": "3QXFOKlokWXMh2x9Q29764",
-  "name": "Frágil",
-  "artist": "Reynier Perez, Septeto Acarey, Maía",
-  "genre": "Salsa",
-  "year": 2018
- },
- {
   "id": "7n6UamxncjagUCxB35MqMf",
   "name": "Gozando en la Habana - Remasterizado",
   "artist": "David Calzado y su Charanga Habanera",
   "genre": "Salsa",
   "year": null
- },
- {
-  "id": "7G0Z77RdBTdf4bt45AL6yS",
-  "name": "Hace Tiempo",
-  "artist": "Fonseca",
-  "genre": "Latin Pop",
-  "year": 2005
- },
- {
-  "id": "7G0Z77RdBTdf4bt45AL6yS",
-  "name": "Hace Tiempo",
-  "artist": "Fonseca",
-  "genre": "Latin Pop",
-  "year": 2005
  },
  {
   "id": "4gBbMJ2ZtUj72nM63NknmN",
@@ -518,74 +1120,11 @@
   "year": null
  },
  {
-  "id": "4knc1Fp3kbuq8bH2byOvLu",
-  "name": "Índigo",
-  "artist": "Camilo, Evaluna Montaner",
-  "genre": "Pop",
-  "year": 2022
- },
- {
-  "id": "3Y1xjjepdqMP141ipYCAqA",
-  "name": "Inglés En Miami",
-  "artist": "Rawayana, Manuel Turizo",
-  "genre": "Reggae",
-  "year": 2026
- },
- {
   "id": "1G1oltHy7huusOr9eoUUQM",
   "name": "Inténtalo",
   "artist": "3BallMTY, América Sierra, El Bebeto",
   "genre": "Tropical",
   "year": null
- },
- {
-  "id": "6K5UtSAXChS6Rpm2NZJnrF",
-  "name": "Juliana",
-  "artist": "DLG",
-  "genre": "Salsa",
-  "year": 2004
- },
- {
-  "id": "6K5UtSAXChS6Rpm2NZJnrF",
-  "name": "Juliana",
-  "artist": "DLG",
-  "genre": "Salsa",
-  "year": 2004
- },
- {
-  "id": "6M8horg7h52MPTxY0I3dQJ",
-  "name": "La Bilirrubina",
-  "artist": "Juan Luis Guerra 4.40",
-  "genre": "Merengue",
-  "year": 1990
- },
- {
-  "id": "0ZrGY4D4eDRKD0Cj5KndAV",
-  "name": "Conquista",
-  "artist": "Jerau",
-  "genre": "Latin Pop",
-  "year": 2006
- },
- {
-  "id": "0zSuN9aQbux9F7CMwvhNT0",
-  "name": "La Cura",
-  "artist": "Frankie Ruiz",
-  "genre": "Salsa",
-  "year": 2008
- },
- {
-  "id": "0fqrZVSenCW6vD2eFMx5pt",
-  "name": "La Despedida",
-  "artist": "Daddy Yankee",
-  "genre": "Reggaetón",
-  "year": 2010
- },
- {
-  "id": "4ZF74uJy2XGgVx8TUeYjZ8",
-  "name": "La Dueña del Swing",
-  "artist": "Los Hermanos Rosario",
-  "genre": "Merengue",
-  "year": 1995
  },
  {
   "id": "4wL59G4Nur3paBanDT6egw",
@@ -595,109 +1134,11 @@
   "year": null
  },
  {
-  "id": "0OMRAvrtLWE2TvcXorRiB9",
-  "name": "La Gozadera (feat. Marc Anthony)",
-  "artist": "Gente De Zona, Marc Anthony",
-  "genre": "Reggaetón",
-  "year": 2016
- },
- {
-  "id": "0qXUTps2gnJv2SxGryo6iS",
-  "name": "La Noche",
-  "artist": "Joe Arroyo, La Verdad",
-  "genre": "Salsa",
-  "year": 1988
- },
- {
-  "id": "31ddSBJ1NfFZAZ6HGPoWMV",
-  "name": "La Revancha",
-  "artist": "Orquesta Zaperoko de",
-  "genre": "Salsa",
-  "year": 2019
- },
- {
   "id": "3OFqP5RVQAgM8ZF65EMYQq",
   "name": "Rebelión",
   "artist": "Joe Arroyo, La Verdad",
   "genre": "Salsa",
   "year": null
- },
- {
-  "id": "1fTWZqBVEaHx9qzyqmUmPN",
-  "name": "La Rueda",
-  "artist": "Frankie Ruiz",
-  "genre": "Salsa",
-  "year": 2008
- },
- {
-  "id": "1TPZ028i7BWWS5xW4UN9ss",
-  "name": "La Tierra del Olvido",
-  "artist": "Carlos Vives",
-  "genre": "Latin Pop",
-  "year": 1995
- },
- {
-  "id": "47nD9EtDtUORYiLPDY4DeI",
-  "name": "La Travesia",
-  "artist": "Juan Luis Guerra 4.40",
-  "genre": "Merengue",
-  "year": 2007
- },
- {
-  "id": "47nD9EtDtUORYiLPDY4DeI",
-  "name": "La Travesia",
-  "artist": "Juan Luis Guerra 4.40",
-  "genre": "Merengue",
-  "year": 2007
- },
- {
-  "id": "0fPwIRj4vZHIGU9Dd2gEMo",
-  "name": "La Ventanita",
-  "artist": "Garibaldi",
-  "genre": "Pop",
-  "year": 1994
- },
- {
-  "id": "0K1XXuhaJBPWMcgjj3ug3u",
-  "name": "Las Avispas",
-  "artist": "Juan Luis Guerra 4.40",
-  "genre": "Merengue",
-  "year": 2004
- },
- {
-  "id": "3pDhN3qB33AOPhQEkUCaWt",
-  "name": "Limbo",
-  "artist": "Daddy Yankee",
-  "genre": "Reggaetón",
-  "year": 2012
- },
- {
-  "id": "47cVjB6QKLkV8RgzGLNJOU",
-  "name": "Llamado de Emergencia",
-  "artist": "Daddy Yankee",
-  "genre": "Reggaetón",
-  "year": 2008
- },
- {
-  "id": "609SDGj0txmlAXRrpwee9Y",
-  "name": "Llegaste Tú",
-  "artist": "Luis Fonsi, Juan Luis Guerra 4.40",
-  "genre": "Merengue",
-  "year": 2026
- },
- {
-  "id": "3pYegUivr1Aw9RzrLlUmDZ",
-  "name": "Llueve El Amor",
-  "artist": "Tito \"El Bambino\"",
-  "genre": "Reggaetón",
-  "year": 2014
- },
- {
-  "id": "6QJ1F9DrlsRSmKDcdVS0Oy",
-  "name": "Lloraras",
-  "artist": "Oscar D'León, La Dimensión Latina",
-  "genre": "Salsa",
-  "year": 2017
  },
  {
   "id": "1X4NgxoIymHDppwBjUigRJ",
@@ -714,109 +1155,11 @@
   "year": null
  },
  {
-  "id": "3WW4yUljbeMjpMpfTV6I6u",
-  "name": "Pa Que Lo Tengas Claro",
-  "artist": "Franco, Oscarcito",
-  "genre": "Reggaetón",
-  "year": 2020
- },
- {
-  "id": "0YxQ5bR8jTvOxG06vEmsq3",
-  "name": "Loco por Volverte a Ver",
-  "artist": "Chili Fernandez",
-  "genre": "Latin Pop",
-  "year": 2004
- },
- {
-  "id": "0YxQ5bR8jTvOxG06vEmsq3",
-  "name": "Loco por Volverte a Ver",
-  "artist": "Chili Fernandez",
-  "genre": "Rock",
-  "year": 2004
- },
- {
-  "id": "2xjcDF21U2ccgE2LEeiMbf",
-  "name": "Loquita",
-  "artist": "Marama",
-  "genre": "Cumbia",
-  "year": 2015
- },
- {
-  "id": "1atJ6pazAZaAqsHihlkFFd",
-  "name": "Mala Mujer",
-  "artist": "Orquesta Zaperoko de",
-  "genre": "Salsa",
-  "year": 2019
- },
- {
-  "id": "1Vy7WUJubV9JEoebuJ9dfe",
-  "name": "Más Que Tu Amigo",
-  "artist": "Marco Antonio Solís",
-  "genre": "Pop",
-  "year": 2003
- },
- {
-  "id": "5lw3vLQEd2IJ9nHRKsF65a",
-  "name": "Me Enamore (Remix) [feat. Elvis Crespo & Tito el Bambino]",
-  "artist": "Angel Y Khriz, Elvis Crespo, Tito \"El Bambino\"",
-  "genre": "Latin Pop",
-  "year": 2015
- },
- {
-  "id": "7jizO2haWuR6oc0i9tprIb",
-  "name": "Me Enamoro de Ella",
-  "artist": "Juan Luis Guerra 4.40",
-  "genre": "Merengue",
-  "year": 1986
- },
- {
-  "id": "7CaLLjqFpHAYRsmc4bqAAX",
-  "name": "Me Estoy Enloqueciendo por Ti",
-  "artist": "Jerry Rivera",
-  "genre": "Salsa",
-  "year": 1992
- },
- {
   "id": "1h9hlUc7Tw0uJAwoyqQFUK",
   "name": "Me Gusta Todo de Ti",
   "artist": "Gran Orquesta Internacional",
   "genre": "Cumbia",
   "year": null
- },
- {
-  "id": "5fF0fb0VFihGDHFshDLi2Z",
-  "name": "Mi Bendición",
-  "artist": "Juan Luis Guerra 4.40",
-  "genre": "Merengue",
-  "year": 2010
- },
- {
-  "id": "5fF0fb0VFihGDHFshDLi2Z",
-  "name": "Mi Bendición",
-  "artist": "Juan Luis Guerra 4.40",
-  "genre": "Merengue",
-  "year": 2010
- },
- {
-  "id": "5uRd1tmUAvfFGSPR5266Xp",
-  "name": "Tu Cariñito",
-  "artist": "Luisito Ayala Y La Puerto Rican Power",
-  "genre": "Salsa",
-  "year": 2000
- },
- {
-  "id": "5uRd1tmUAvfFGSPR5266Xp",
-  "name": "Tu Cariñito",
-  "artist": "Luisito Ayala Y La Puerto Rican Power",
-  "genre": "Salsa",
-  "year": 2000
- },
- {
-  "id": "6tb7r9qcLBuguz2nG6fpBu",
-  "name": "Na Na Na (Dulce Niña)",
-  "artist": "A.B. Quintanilla III Y Los Kumbia Kings",
-  "genre": "Latin Pop",
-  "year": 2007
  },
  {
   "id": "1azNmWAecfKNw0efhKkzNM",
@@ -826,90 +1169,6 @@
   "year": null
  },
  {
-  "id": "11zelAWJfaMjdx8oYXChzD",
-  "name": "Mi Libertad",
-  "artist": "Frankie Ruiz",
-  "genre": "Salsa",
-  "year": 2008
- },
- {
-  "id": "11zelAWJfaMjdx8oYXChzD",
-  "name": "Mi Libertad",
-  "artist": "Frankie Ruiz",
-  "genre": "Salsa",
-  "year": 2008
- },
- {
-  "id": "4u5xLMRN0dgKBFFN8FiNgv",
-  "name": "Niña Bonita",
-  "artist": "Chino & Nacho",
-  "genre": "Reggaetón",
-  "year": 2010
- },
- {
-  "id": "0a9L9Eylbc0mwWrG2s6n0A",
-  "name": "Mueve El Toto",
-  "artist": "Lore y Roque Me Gusta, Juan Quin y Dago, Emus DJ",
-  "genre": "Reggaetón",
-  "year": 2016
- },
- {
-  "id": "6hHxqj04s5BbpoNGz25GUm",
-  "name": "Niña",
-  "artist": "Mauricio & PalodeAgua",
-  "genre": "Latin Pop",
-  "year": 2003
- },
- {
-  "id": "1uWQ4XnZmCeLoikVoUFeNr",
-  "name": "No Morira (No Matter What)",
-  "artist": "DLG",
-  "genre": "Salsa",
-  "year": 2013
- },
- {
-  "id": "0jLNtXSoXNQ09T3zyhBPDl",
-  "name": "No Te Contaron Mal",
-  "artist": "You Salsa",
-  "genre": "Salsa",
-  "year": 2019
- },
- {
-  "id": "180aaia4C30EAA9DIyJb23",
-  "name": "No Te Creas Tan Importante",
-  "artist": "Josimar y Su Yambú",
-  "genre": "Salsa",
-  "year": 2017
- },
- {
-  "id": "6r4EpLVNrajnIXmY9BgtgC",
-  "name": "Noches de Fantasía",
-  "artist": "Joseph Fonseca",
-  "genre": "Merengue",
-  "year": 2000
- },
- {
-  "id": "4mCCBwhjkMSlq5Jo0tGKZa",
-  "name": "Nocivo",
-  "artist": "KEMA",
-  "genre": "Latin Pop",
-  "year": 2006
- },
- {
-  "id": "4zOZQdgs7nSjMkqB7keSM5",
-  "name": "Ojos Chinos",
-  "artist": "El Gran Combo De Puerto Rico",
-  "genre": "Salsa",
-  "year": 1982
- },
- {
-  "id": "0WFejfwf2BUGlkwjZ5kPgv",
-  "name": "OJITOS ROJOS",
-  "artist": "Grupo Frontera, Ke Personajes",
-  "genre": "Banda",
-  "year": 2023
- },
- {
   "id": "00gAVWgRJy92PCAHFzVu83",
   "name": "Pa' Mayte",
   "artist": "Carlos Vives",
@@ -917,172 +1176,11 @@
   "year": null
  },
  {
-  "id": "19CmuECYssqkPWANF4nLWM",
-  "name": "Para No Verte Más",
-  "artist": "La Mosca",
-  "genre": "Electronic",
-  "year": 2000
- },
- {
-  "id": "19CmuECYssqkPWANF4nLWM",
-  "name": "Para No Verte Más",
-  "artist": "La Mosca",
-  "genre": "Rock",
-  "year": 2000
- },
- {
-  "id": "1EhcDLVil2ZB2AWGPD141t",
-  "name": "PARTIDO EN DOS",
-  "artist": "La Única Tropical",
-  "genre": "Tropical",
-  "year": 2024
- },
- {
-  "id": "5OA9HCnPMG8LUPmldbh1zC",
-  "name": "Pedro Navaja",
-  "artist": "Rubén Blades",
-  "genre": "Salsa",
-  "year": 2001
- },
- {
-  "id": "0FcgB8l69nXBOmvhvEXm8o",
-  "name": "Pegame Tu Vicio",
-  "artist": "Eddy Herrera",
-  "genre": "Merengue",
-  "year": 2001
- },
- {
-  "id": "78dpORbomspz2HK64V0i74",
-  "name": "Pídeme",
-  "artist": "Danni Ubeda",
-  "genre": "Pop",
-  "year": 2003
- },
- {
-  "id": "2eM20Ku7jc2DVpV1EHNpra",
-  "name": "Probablemente",
-  "artist": "Daniela Darcourt",
-  "genre": "Latin Pop",
-  "year": 2018
- },
- {
-  "id": "2q9udNV9NK0BL3q9p6TLxf",
-  "name": "Procura",
-  "artist": "ChiChi Peralta, Jandy Feliz",
-  "genre": "Salsa",
-  "year": 1997
- },
- {
-  "id": "3NBDdGYowVMlQiG91y7xLm",
-  "name": "Qué Quieres De Mi",
-  "artist": "WATAKA",
-  "genre": "Latin Pop",
-  "year": 2020
- },
- {
-  "id": "7FxnHDy0ew0aDygCSo6vYH",
-  "name": "Quiero Amanecer",
-  "artist": "Bareto",
-  "genre": "Cumbia",
-  "year": 2016
- },
- {
-  "id": "4HUzOrwak0j6l3Z0RVTLwO",
-  "name": "Todo Mi Corazon",
-  "artist": "DLG",
-  "genre": "Salsa",
-  "year": 1996
- },
- {
-  "id": "10acMrTdbp1KDqdX5UVHPB",
-  "name": "Quitemonos La Ropa",
-  "artist": "NG2",
-  "genre": "Salsa",
-  "year": 2004
- },
- {
   "id": "4esgJdSc4S52eQCsGSRJ1S",
   "name": "Ready 2 Go (Remix) [feat. Dyland & Lenny]",
   "artist": "Ale Mendoza, Dyland & Lenny",
   "genre": "Latin Pop",
   "year": null
- },
- {
-  "id": "1ASo4at1j2HwIZLujwl7yp",
-  "name": "Rompe la Cintura",
-  "artist": "Alexis y Fido",
-  "genre": "Reggaetón",
-  "year": 2014
- },
- {
-  "id": "08ETpSeBiPxPMApamUqC2R",
-  "name": "Se Acabó el Amor",
-  "artist": "Adolescent's Orquesta",
-  "genre": "Salsa",
-  "year": 2004
- },
- {
-  "id": "7uebcjB4PNrMzTUdxCefno",
-  "name": "Señor Mentira",
-  "artist": "Daniela Darcourt",
-  "genre": "Latin Pop",
-  "year": 2019
- },
- {
-  "id": "4DMer3JyTYezEzo9tatZOb",
-  "name": "Si Me Dejas No Vale",
-  "artist": "La Linea",
-  "genre": "Merengue",
-  "year": 2008
- },
- {
-  "id": "5981zpjMYeKGoEQ6K9794L",
-  "name": "Si Tú Me Besas",
-  "artist": "Víctor Manuelle",
-  "genre": "Pop",
-  "year": 2012
- },
- {
-  "id": "35hemoZQuo9lEbFSS05I9h",
-  "name": "Si Tú No Estás",
-  "artist": "Gente De Zona",
-  "genre": "Reggaetón",
-  "year": 2018
- },
- {
-  "id": "6hfawWEvZfjxl3fisEakOY",
-  "name": "Sin Querer",
-  "artist": "Bacanos",
-  "genre": "Latin Pop",
-  "year": 1995
- },
- {
-  "id": "6hfawWEvZfjxl3fisEakOY",
-  "name": "Sin Querer",
-  "artist": "Bacanos",
-  "genre": "Latin Pop",
-  "year": 1995
- },
- {
-  "id": "5R9a4t5t5O0IsznsrKPVro",
-  "name": "Single Ladies (Put a Ring on It)",
-  "artist": "Beyoncé",
-  "genre": "Pop",
-  "year": 2008
- },
- {
-  "id": "2gVR7azkV54VtNQXfWvRtP",
-  "name": "Soltera.com",
-  "artist": "Son Tentación",
-  "genre": "Latin Pop",
-  "year": 2014
- },
- {
-  "id": "7JIjUx3GsL0upxmNJacmtz",
-  "name": "Suavemente",
-  "artist": "Elvis Crespo",
-  "genre": "Merengue",
-  "year": 1998
  },
  {
   "id": "3fRIuTih8bzc0vtY9fHhvF",
@@ -1099,83 +1197,6 @@
   "year": null
  },
  {
-  "id": "5cgwBlY1oNdnuNsy4PaXAz",
-  "name": "Te Doy Mi Amor",
-  "artist": "Bacanos",
-  "genre": "Latin Pop",
-  "year": 2005
- },
- {
-  "id": "2WveHlo9BiLG3ppkjpd3Mc",
-  "name": "Te Doy Mi Vida",
-  "artist": "Lucas Arnau",
-  "genre": "Latin Pop",
-  "year": 2004
- },
- {
-  "id": "2kP6fOqdSQ5CYqVH5z5844",
-  "name": "Te Encontre",
-  "artist": "El Vega",
-  "genre": "Latin Pop",
-  "year": 2017
- },
- {
-  "id": "2in1gSZtv2lRbcZUmN9aAl",
-  "name": "Te Mando Flores",
-  "artist": "Fonseca",
-  "genre": "Latin Pop",
-  "year": 2005
- },
- {
-  "id": "6Y5k0NupErwLzOQXDxfVFa",
-  "name": "Te Quiero Comer La Boca",
-  "artist": "La Mosca",
-  "genre": "Electronic",
-  "year": 2001
- },
- {
-  "id": "6Y5k0NupErwLzOQXDxfVFa",
-  "name": "Te Quiero Comer La Boca",
-  "artist": "La Mosca",
-  "genre": "Rock",
-  "year": 2001
- },
- {
-  "id": "6GGv5bp9nsEQMYyguJfWyv",
-  "name": "Timbalero",
-  "artist": "El Gran Combo De Puerto Rico",
-  "genre": "Salsa",
-  "year": 1987
- },
- {
-  "id": "6SgkilvKX94WfXRbhr3RCu",
-  "name": "Todos Tenemos Un Amor",
-  "artist": "La Mosca",
-  "genre": "Rock",
-  "year": 2001
- },
- {
-  "id": "1kCmq61nfjoMBBaqTjMCJo",
-  "name": "Toma Que Toma",
-  "artist": "JP El Chamaco",
-  "genre": "Reparto",
-  "year": 2023
- },
- {
-  "id": "4nePI9JSkEf43FlKST8Imr",
-  "name": "La Triple M",
-  "artist": "Mawell",
-  "genre": "Reparto",
-  "year": 2023
- },
- {
-  "id": "3l8zyeHnG8u2q7H4FQyVtS",
-  "name": "Tropicoqueta",
-  "artist": "KAROL G",
-  "genre": "Reggaetón",
-  "year": 2025
- },
- {
   "id": "3yEtuhGR8jOtusa29jWrhG",
   "name": "Tu Amor Me Hace Bien - Salsa Version",
   "artist": "Marc Anthony",
@@ -1183,74 +1204,11 @@
   "year": null
  },
  {
-  "id": "4SQQXTfDQQzqMYt9Ems7A1",
-  "name": "Tú Con Él",
-  "artist": "Frankie Ruiz",
-  "genre": "Salsa",
-  "year": 2008
- },
- {
-  "id": "5e2uf58IYZUxCZSeAIOK4p",
-  "name": "Tu de Que Vas",
-  "artist": "Los 4",
-  "genre": "Salsa",
-  "year": 2016
- },
- {
   "id": "3he2YQ9qas5yiOHvkqia1p",
   "name": "Tu Guardian - Versión Remix Merengue",
   "artist": "Victor Muñoz, Oscarcito",
   "genre": "Latin Pop",
   "year": null
- },
- {
-  "id": "1wuejLPmyiQtvdPbUIvrhK",
-  "name": "Tu Me Quemas",
-  "artist": "Chino, Nacho",
-  "genre": "Reggaetón",
-  "year": 2004
- },
- {
-  "id": "5Q2J37xbIR60z6ifswoGKe",
-  "name": "Un Vino, Una Cerveza",
-  "artist": "Pedro Suárez-Vértiz",
-  "genre": "Rock",
-  "year": 2001
- },
- {
-  "id": "7y91nQBMhyeHWTn9wVvhKl",
-  "name": "Una Vida Pasada",
-  "artist": "Camilo, Carín León",
-  "genre": "Pop",
-  "year": 2024
- },
- {
-  "id": "6YYmoV9YbBefsspGmqFHbs",
-  "name": "Una Vaina Loca",
-  "artist": "Fuego",
-  "genre": "Merengue",
-  "year": 2011
- },
- {
-  "id": "5TFD2bmFKGhoCRbX61nXY5",
-  "name": "NUEVAYoL",
-  "artist": "Bad Bunny",
-  "genre": "Reggaetón",
-  "year": 2025
- },
- {
-  "id": "7uC9TpGGHrAssX8NUKBqed",
-  "name": "Vale la Pena",
-  "artist": "Juan Luis Guerra 4.40",
-  "genre": "Merengue",
-  "year": 1998
- },
- {
-  "id": "5HCGrYR7g9u2X9Ju83yQLm",
-  "name": "Virgen",
-  "artist": "Adolescent's Orquesta",
-  "genre": "Salsa",
-  "year": 2001
  },
  {
   "id": "2KDN1DIh2kWesR9RIeDe25",
@@ -1274,13 +1232,6 @@
   "year": null
  },
  {
-  "id": "5fq4jxlqyjAVFLOB0lZIdT",
-  "name": "25 Horas",
-  "artist": "Proyecto Uno",
-  "genre": "Merengue",
-  "year": 2014
- },
- {
   "id": "2m6iryfksZP44v51dKnlgg",
   "name": "La Quiero A Morir",
   "artist": "DLG",
@@ -1288,67 +1239,11 @@
   "year": null
  },
  {
-  "id": "4RcN7qGRs4OfbI8cHmqQiL",
-  "name": "Chiquilla",
-  "artist": "A.B. Quintanilla III Y Los Kumbia Kings",
-  "genre": "Latin Pop",
-  "year": 2006
- },
- {
-  "id": "6K1frT710sxppNeH3iJvqP",
-  "name": "Apostemos Que Me Caso",
-  "artist": "Grupo 5",
-  "genre": "Cumbia",
-  "year": 2020
- },
- {
-  "id": "1jD48pmiHMSVHHPzKLi4P3",
-  "name": "Tu Eres Ajena",
-  "artist": "Eddy Herrera",
-  "genre": "Merengue",
-  "year": 2001
- },
- {
-  "id": "2GYKIXFx2kYag8qpR7K3Ka",
-  "name": "Como Hago",
-  "artist": "Eddy Herrera",
-  "genre": "Merengue",
-  "year": 2005
- },
- {
-  "id": "54uBpRpdpMx96JAk1OyHez",
-  "name": "Yo No Sé Mañana",
-  "artist": "Luis Enrique",
-  "genre": "Salsa",
-  "year": 2009
- },
- {
   "id": "5v6nK8JJM8IXJqKt4gXZTG",
   "name": "Rebelión",
   "artist": "Joe Arroyo, La Verdad",
   "genre": "Salsa",
   "year": null
- },
- {
-  "id": "1EhHf3ic0JVzzcrHxq5qgS",
-  "name": "En Barranquilla Me Quedo",
-  "artist": "Joe Arroyo",
-  "genre": "Salsa",
-  "year": 2017
- },
- {
-  "id": "2yjHvbMtfyoXXJYpsR3rYP",
-  "name": "Motor Y Motivo",
-  "artist": "Grupo 5",
-  "genre": "Cumbia",
-  "year": 2005
- },
- {
-  "id": "5q9VC2VFj8Pak4E2jQnp7I",
-  "name": "A Pedir Su Mano",
-  "artist": "Juan Luis Guerra 4.40",
-  "genre": "Merengue",
-  "year": 1990
  },
  {
   "id": "69dFWW1avAVXF4K59MwNNp",
