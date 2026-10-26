@@ -30,7 +30,6 @@ Run:  python -m src.preferences <check|add|report|label|export> ...
 from __future__ import annotations
 
 import os
-from datetime import date
 from pathlib import Path
 
 import pandas as pd
@@ -231,7 +230,8 @@ def export(playlist_id: str | None = None) -> pd.DataFrame:
     (grouped by genre, cleaned repertoire names, original line numbers).
 
     Needs an up-to-date screen_playlist.csv (`report --out`) for genres.
-    Songs outside the repertoire keep their Spotify name/artist and no line number.
+    Artists are Spotify's credited names (what web/index.html shows); songs outside
+    the repertoire keep their Spotify title too, and get no line number.
     """
     load_dotenv()
     playlist_id = playlist_id or os.getenv("FINAL_PLAYLIST_ID")
@@ -244,14 +244,14 @@ def export(playlist_id: str | None = None) -> pd.DataFrame:
     screen = pd.read_csv(SCREEN_CSV, encoding="utf-8", keep_default_na=False)[["track_id", "line_no", "genre"]]
     screen["line_no"] = pd.to_numeric(screen["line_no"], errors="coerce").astype("Int64")
     metadata = pd.read_csv(config.SONGS_METADATA_CSV, encoding="utf-8", keep_default_na=False)[
-        ["line_no", "song_clean", "artist_corrected"]
+        ["line_no", "song_clean"]
     ]
 
+    # Song title: cleaned repertoire spelling. Artist: Spotify's, same as the web page shows.
     df = chosen.merge(screen, on="track_id", how="left").merge(metadata, on="line_no", how="left")
     # The repertoire lists some songs twice (spelling variants); keep one row per track, lowest line.
     df = df.sort_values("line_no").drop_duplicates("track_id")
     df["song"] = df["song_clean"].where(df["song_clean"].fillna("") != "", df["name"])
-    df["artist"] = df["artist_corrected"].where(df["artist_corrected"].fillna("") != "", df["artist"])
     df["genre"] = df["genre"].fillna("").replace("", "Sin género")
     df = df[["line_no", "song", "artist", "genre", "track_id"]]
 
@@ -290,7 +290,7 @@ def _write_pdf(df: pd.DataFrame, path) -> None:
         page = doc.new_page(width=W, height=H)
         y = M
         if page.number == 0:
-            text(M, f"Repertorio final - {date.today():%d/%m/%Y} - {len(df)} canciones", size=14, font="hebo")
+            text(M, f"Repertorio final - {len(df)} canciones", size=14, font="hebo")
             y += LH * 2
         page.insert_text((W - M - 20, H - M / 2), str(page.number + 1), fontsize=8, fontname="helv")
 
