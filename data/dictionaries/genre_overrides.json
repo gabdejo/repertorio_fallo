@@ -31,5 +31,10 @@
   "Mawell": {"genre": "Reparto"},
   "Los 4": {"genre": "Salsa"},
   "Bigal & L Jake": {"genre": "Latin Pop"},
-  "Eddy Herrera": {"genre": "Merengue"}
+  "Eddy Herrera": {"genre": "Merengue"},
+  "Daniela Darcourt": {"genre":"Salsa"},
+  "Son Tentación": {"genre":"Salsa"},
+  "Alexis y Fido": {"genre":"Latin Pop"},
+  "Chino & Nacho": {"genre":"Latin Pop"},
+  "Gente De Zona, Marc Anthony": {"genre":"Salsa"}
 }
