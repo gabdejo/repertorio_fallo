@@ -19,3 +19,4 @@ __pycache__/
 # see feedback_external-api-pacing memory). Processed CSVs are cheap to rebuild
 # from the cache + dictionaries, so those stay regenerable/ignored.
 data/processed/*.csv
+data/processed/*.pdf

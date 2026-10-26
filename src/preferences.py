@@ -20,12 +20,17 @@ rating needed. This stage stitches together the tools built to support that:
                             screen playlist (matched -> fix via
                             genre_overrides.json; unmatched -> fix via
                             unmatched_genre_overrides.json), read-only.
+    export                 Write the Final playlist (the "in" set chosen in
+                            web/index.html) as the orchestra's deliverable:
+                            final_playlist.pdf (grouped by genre, cleaned
+                            names, repertoire line numbers) + final_playlist.csv.
 
-Run:  python -m src.preferences <check|add|report|label> ...
+Run:  python -m src.preferences <check|add|report|label|export> ...
 """
 from __future__ import annotations
 
 import os
+from datetime import date
 from pathlib import Path
 
 import pandas as pd
@@ -35,6 +40,9 @@ from . import config, genre_analysis, lastfm_api, playlist_creation, playlist_di
 
 MATCHED_MISSING_CSV = config.PROCESSED / "playlist_review_matched_missing_genre.csv"
 UNMATCHED_FILL_CSV = config.PROCESSED / "playlist_review_unmatched_missing_genre.csv"
+SCREEN_CSV = config.PROCESSED / "screen_playlist.csv"
+FINAL_EXPORT_CSV = config.PROCESSED / "final_playlist.csv"
+FINAL_EXPORT_PDF = config.PROCESSED / "final_playlist.pdf"
 
 
 def _screen_playlist_id(playlist_id: str | None) -> str:
@@ -217,6 +225,93 @@ def label(playlist_id: str | None = None) -> None:
     )
 
 
+def export(playlist_id: str | None = None) -> pd.DataFrame:
+    """Fetch the Final playlist live and write the orchestra deliverable:
+    final_playlist.csv (UTF-8 BOM, Excel-safe) and final_playlist.pdf
+    (grouped by genre, cleaned repertoire names, original line numbers).
+
+    Needs an up-to-date screen_playlist.csv (`report --out`) for genres.
+    Songs outside the repertoire keep their Spotify name/artist and no line number.
+    """
+    load_dotenv()
+    playlist_id = playlist_id or os.getenv("FINAL_PLAYLIST_ID")
+    if not playlist_id:
+        raise ValueError("No playlist given. Pass --playlist, or set FINAL_PLAYLIST_ID in .env.")
+
+    sp = spotify_api.get_client()
+    chosen = playlist_diff.get_playlist_tracks(sp, playlist_id)
+
+    screen = pd.read_csv(SCREEN_CSV, encoding="utf-8", keep_default_na=False)[["track_id", "line_no", "genre"]]
+    screen["line_no"] = pd.to_numeric(screen["line_no"], errors="coerce").astype("Int64")
+    metadata = pd.read_csv(config.SONGS_METADATA_CSV, encoding="utf-8", keep_default_na=False)[
+        ["line_no", "song_clean", "artist_corrected"]
+    ]
+
+    df = chosen.merge(screen, on="track_id", how="left").merge(metadata, on="line_no", how="left")
+    # The repertoire lists some songs twice (spelling variants); keep one row per track, lowest line.
+    df = df.sort_values("line_no").drop_duplicates("track_id")
+    df["song"] = df["song_clean"].where(df["song_clean"].fillna("") != "", df["name"])
+    df["artist"] = df["artist_corrected"].where(df["artist_corrected"].fillna("") != "", df["artist"])
+    df["genre"] = df["genre"].fillna("").replace("", "Sin género")
+    df = df[["line_no", "song", "artist", "genre", "track_id"]]
+
+    # Genres by size (biggest first), songs by repertoire line inside each.
+    order = df["genre"].value_counts().index.tolist()
+    df["genre"] = pd.Categorical(df["genre"], categories=order, ordered=True)
+    df = df.sort_values(["genre", "line_no", "song"]).reset_index(drop=True)
+    df["genre"] = df["genre"].astype(str)
+
+    df.to_csv(FINAL_EXPORT_CSV, index=False, encoding="utf-8-sig")
+    _write_pdf(df, FINAL_EXPORT_PDF)
+    n_outside = df["line_no"].isna().sum()
+    print(f"[preferences export] {len(df)} songs ({n_outside} outside the repertoire) -> {FINAL_EXPORT_CSV}, {FINAL_EXPORT_PDF}")
+    return df
+
+
+def _write_pdf(df: pd.DataFrame, path) -> None:
+    """A4 list in the orchestra's own layout: `N.  SONG   ARTIST`, one block per genre."""
+    import fitz
+
+    W, H, M, LH, FS = 595, 842, 50, 15, 10
+    X_NUM, X_SONG, X_ARTIST = M + 30, M + 40, M + 290
+    doc = fitz.open()
+    page, y = None, H
+
+    def text(x, s, size=FS, font="helv", width=None, align=0):
+        if width:  # shrink to fit the column instead of overlapping the next one
+            while size > 6 and fitz.get_text_length(s, fontname=font, fontsize=size) > width:
+                size -= 0.5
+        if align == 1:
+            x -= fitz.get_text_length(s, fontname=font, fontsize=size)
+        page.insert_text((x, y), s, fontsize=size, fontname=font)
+
+    def new_page():
+        nonlocal page, y
+        page = doc.new_page(width=W, height=H)
+        y = M
+        if page.number == 0:
+            text(M, f"Repertorio final - {date.today():%d/%m/%Y} - {len(df)} canciones", size=14, font="hebo")
+            y += LH * 2
+        page.insert_text((W - M - 20, H - M / 2), str(page.number + 1), fontsize=8, fontname="helv")
+
+    new_page()
+    for genre, grp in df.groupby("genre", sort=False):
+        if y + LH * 3 > H - M:
+            new_page()
+        y += LH / 2
+        text(M, f"{genre} ({len(grp)})", size=12, font="hebo")
+        y += LH
+        for r in grp.itertuples():
+            if y + LH > H - M:
+                new_page()
+            text(X_NUM, f"{r.line_no}." if pd.notna(r.line_no) else "-", align=1)
+            text(X_SONG, r.song, width=X_ARTIST - X_SONG - 8)
+            text(X_ARTIST, r.artist, width=W - M - X_ARTIST)
+            y += LH
+    doc.save(path)
+    doc.close()
+
+
 if __name__ == "__main__":
     import argparse
 
@@ -239,6 +334,9 @@ if __name__ == "__main__":
     p_label = sub.add_parser("label", help="export/reload missing-genre lists for the screen playlist")
     p_label.add_argument("--playlist", default=None, help="defaults to SCREEN_PLAYLIST_ID in .env")
 
+    p_export = sub.add_parser("export", help="write the Final playlist as PDF + CSV for the orchestra")
+    p_export.add_argument("--playlist", default=None, help="defaults to FINAL_PLAYLIST_ID in .env")
+
     args = parser.parse_args()
 
     if args.command == "check":
@@ -251,3 +349,5 @@ if __name__ == "__main__":
         report(args.playlist, out_csv=args.out)
     elif args.command == "label":
         label(args.playlist)
+    elif args.command == "export":
+        export(args.playlist)

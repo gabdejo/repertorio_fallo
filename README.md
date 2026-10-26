@@ -131,3 +131,14 @@ Safety: the screen playlist id is listed in `protectedPlaylistIds` and the page 
 write naming it. On the Python side `playlist_creation.guard()` blocks every write to
 `SCREEN_PLAYLIST_ID` (override deliberately with `ALLOW_PROTECTED_PLAYLIST_WRITES=1`).
 `web/songs.json` doubles as a committed snapshot of the screen playlist's track ids.
+
+## Exporting the Final playlist for the orchestra
+
+```bash
+.venv/Scripts/python.exe -m src.preferences report --out data/processed/screen_playlist.csv  # refresh genres
+.venv/Scripts/python.exe -m src.preferences export      # needs FINAL_PLAYLIST_ID in .env
+```
+
+Writes `data/processed/final_playlist.pdf` (grouped by genre, cleaned names, repertoire line
+numbers; songs outside the repertoire show `-`) and `final_playlist.csv` (UTF-8 BOM, opens
+cleanly in Excel).
